@@ -1,1 +1,0 @@
-# Polytama-tamagoshi-

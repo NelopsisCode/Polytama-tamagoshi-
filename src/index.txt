@@ -1,0 +1,1 @@
+id;nameItem;numberItem;food;hydration;hygiene;happiness.
