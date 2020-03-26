@@ -3,20 +3,25 @@
 using namespace std;
 
 Clothes::Clothes(){}
-//revoir pour prendre en compte l'idItem? 
-Clothes::Clothes(const IdBody& idClo)
+
+
+Clothes::Clothes(const IdBody & slotC, const unsigned int & idIt, 
+		const string & nameIt, const int & nbIt)
 {
-	slotClothes = idClo;
+	slotClothes = slotC;
+	idItem=idIt;
+	nameItem=nameIt;
+	numberItem=nbIt;
 }
 
 Clothes::~Clothes(){}
 
-void Clothes::setClothes (const IdBody & idClo)
+void Clothes::setSlotClothes (const IdBody & slotC)
 {
-	slotClothes=idClo;
+	slotClothes=slotC;
 }
 
-IdBody Clothes::getClothes ()const
+IdBody Clothes::getSlotClothes ()const
 {
 	return slotClothes;
 }
@@ -27,6 +32,7 @@ Clothes Clothes::operator=(const Clothes& cloth)
 	this->slotClothes=cloth.slotClothes;
 	this->idItem=cloth.idItem;
 	this->nameItem=cloth.nameItem;
+	this->numberItem=cloth.numberItem;
 	return *this;
 }
 

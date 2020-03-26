@@ -4,9 +4,10 @@ using namespace std;
 
 Polytama::Polytama()
 {
-	cout <<"Comment s'appel le PolyTama? " <<endl;
-	cin >> tamaName ;
-
+	//à changer d'emplacement (faire une fonction de création du Tama)
+	//cout <<"Comment s'appel le PolyTama? " <<endl;
+	//cin >> tamaName ;
+	tamaName = "Boris";
 	tamaHealth.setValue(100);
 	tamaJoy.setValue(100);
 	tamaHunger.setValue(100);
@@ -20,7 +21,7 @@ Polytama::Polytama()
 
 }
 
-	
+
 Polytama::~Polytama()
 {
 
@@ -67,12 +68,12 @@ void Polytama::removeClothes(const IdBody & IdClo)
 
 void Polytama::wearClothes(Clothes c)
 {
-	if (tamaClothes[c.getClothes()] != nullptr)
+	if (tamaClothes[c.getSlotClothes()] != nullptr)
 	{
-		removeClothes(c.getClothes()); //suppression du vêtement
+		removeClothes(c.getSlotClothes()); //suppression du vêtement
 	}
 
-	tamaClothes[c.getClothes()] = &c;	
+	tamaClothes[c.getSlotClothes()] = &c;	
 }
 
 
@@ -81,6 +82,7 @@ void Polytama::wearClothes(Clothes c)
 void Polytama::dab()
 {
 	cout << tamaName << " effectue le dab (dans un endroit inadéquat..)" << endl << endl;
+
 	tamaJoy += 10;
 	tamaHygiene -=10; 
 }
@@ -105,16 +107,161 @@ void Polytama::printPolytama()const
 	cout << "Vie: " << tamaHealth.getValue() << endl << endl;
 }
 
+void Polytama::save (const string & filename )const
+{
+	ofstream savefile(("data/" + filename).c_str());
+
+	if (!savefile.is_open())
+	{
+		cout << "Problème dans l'ouverture du fichier" << endl;
+		exit(EXIT_FAILURE);
+	}
+//écrit dans le fichier save
+	savefile << tamaName << " " ;
+	savefile << tamaHealth.getValue() << " " ; 
+	savefile << tamaHunger.getValue() << " " ; 
+	savefile << tamaJoy.getValue() << " " ; 
+	savefile << tamaHygiene.getValue() << " " ; 
+	savefile << tamaThirst.getValue() << " " ; 
+	for (int i = 0; i<3 ; i++)
+	{
+		if(tamaClothes[i] != nullptr)
+		{
+			savefile << tamaClothes[i]->getIdItem() << " " ; 
+		}
+		else
+		{
+			savefile << "nullptr" << " " ; 
+		}
+	}
+
+	savefile << (double) time(NULL); //temps passé depuis le 1er janvier 1970
+
+	savefile.close();
+}
+
+
+void Polytama::loadSave (const string & filename, double & time)
+{
+
+	ifstream savefile(("data/" + filename).c_str());
+
+	if (!savefile.is_open())
+	{
+		cout << "Problème dans l'ouverture du fichier" << endl;
+		exit(EXIT_FAILURE);
+	}
+
+	savefile >> tamaName;
+
+	unsigned int a;
+
+	savefile >> a;
+	tamaHealth.setValue(a);
+	savefile >> a;
+	tamaHunger.setValue(a);
+	savefile >> a;
+	tamaJoy.setValue(a);
+	savefile >> a;
+	tamaHygiene.setValue(a);
+	savefile >> a;
+	tamaThirst.setValue(a);
+
+	string clothes;
+
+	for(int i = 0 ; i < 3 ; i++)
+	{
+		savefile >> clothes;
+
+		if (clothes != "nullptr")
+		{
+			unsigned int a = atoi(clothes.c_str());
+
+			Clothes c((IdBody)i, a, "", 1);
+			tamaClothes[i] = &c;
+		}
+	}
+	
+	savefile >> time; //le temps passé depuis le 1er janvier 1970 à la dernière sauvegarde
+
+	savefile.close();
+}
+
+
+void Polytama::pastTime(const double & initTime)
+{
+	double pasttime = (double) time(NULL) - initTime;
+	
+	cout << pasttime << "sec" << endl;
+
+	pasttime = pasttime / 60;
+
+	cout << pasttime << "min" << endl;
+
+	unsigned int drop = pasttime / DROPRATE;
+
+	cout << drop <<endl;
+
+	tamaHygiene -= drop;
+
+	tamaHunger -= drop;
+
+	tamaJoy -= drop;
+
+	tamaThirst -= drop;
+
+
+}
+
+
+
+
 void Polytama::polytamaTest()
 {
+	double initTime;
+	loadSave("testsave.txt",initTime);
+
+	cout << initTime << endl;
+
+	pastTime(initTime);
+
 	printPolytama();
-	cout << "Le temps passe... " << tamaName << " s'ennuie... Il perd de la joie... :'(" << endl; 
-	tamaJoy -= 30 ; 
-	printPolytama();
-	dab();
-	printPolytama();
-	assert (tamaJoy.getValue() == 80 and tamaHygiene.getValue() == 90);
-	takeAbath();
-	assert(tamaHygiene.getValue() == 100);
-	printPolytama();
+	//Inventory manger;
+	//manger.loadIndexConsommable("src/index.txt");
+	cout << "Vous pouvez :"<<endl;
+	cout<<"1 : Faire dabber "<<tamaName<<endl;
+	cout<<"2 : Lui donner un bain "<<endl;
+	cout<<"3 : Jouer avec lui "<<endl;
+	cout<<"4 : lui donner à manger"<<endl;
+	cout<<"5 : afficher l'inventaire"<<endl;
+	cout<<"6 : Ne rien faire"<<endl;
+	unsigned int i=0;
+	cin>>i;
+	switch (i) {
+		case 1 : { 
+			dab();
+			printPolytama();
+		} break;
+		case 2 : { 
+			takeAbath();
+			printPolytama();
+		}break;
+		case 3 : {
+			//minigame();
+			cout<<"impossible pour l'instant"<<endl;
+		}break;
+		case 4 : {
+			//avec l'inventaire
+			cout<<"impossible pour l'instant"<<endl;
+		}break;
+		case 5 : {	
+			//manger.printInventory();
+		}break;	
+		
+		default : {
+			cout<<"Veuillez choisir une proposition ci-dessus"<<endl;
+		}break;
+	}
+
+	save("testsave.txt");
 }

@@ -20,13 +20,14 @@ public :
   unsigned int getMaxBar() const;
 
   // Fonction membre
-  void  printValue() const;
+  void printValue() const;
   void changeValue (int valAdded);
+  void regressionBar();
 
   // Surcharge operateur
-  void operator+=(const int& val);
-  void operator-=(const int& val);
-  void operator=(const Bar& b);
+  void operator+=(const unsigned int & val);
+  void operator-=(const unsigned int & val);
+  Bar* operator=(const Bar& b);
 
 
 private : 

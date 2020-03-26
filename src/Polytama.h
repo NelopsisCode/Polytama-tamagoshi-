@@ -4,13 +4,19 @@
 #include <cassert>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <time.h>
+
 #include "Bar.h"
 #include "Item.h" //consommable + clothes
 #include "Consommable.h"
 #include "Clothes.h"
+#include "Inventory.h"
+
 
 using namespace std;
 
+const unsigned int DROPRATE = 2 ; //(chaque bar perd 1 touutes les 2 min)
 
 class Polytama
 {
@@ -45,6 +51,12 @@ public:
 	void takeAbath();
 
 	void printPolytama()const;
+
+	void save(const string & filename)const;
+
+	void loadSave (const string & filename, double & time);
+
+	void pastTime(const double & time);
 
 	void polytamaTest();
 

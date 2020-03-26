@@ -10,8 +10,13 @@ Consommable::Consommable()
 	happiness=0;
 }
 
-Consommable::Consommable(const int & foo, const int & hydra, const int & hyg, const int & happi)
+Consommable::Consommable(const unsigned int& idIt,const string& nameIt,
+		const int& nbIt,const int & foo, const int & hydra, 
+		const int & hyg, const int & happi)
 {
+	idItem=idIt;
+	nameItem=nameIt;
+	numberItem=nbIt;
 	food=foo;
 	hydration=hydra;
 	hygiene=hyg;
@@ -66,4 +71,14 @@ int Consommable::getHappiness ()const
 	return happiness;
 }
 
-
+Consommable Consommable::operator=(const Consommable& conso)
+{
+	this->numberItem=conso.numberItem;
+	this->idItem=conso.idItem;
+	this->nameItem=conso.nameItem;
+	this->food=conso.food;
+	this->hygiene=conso.hygiene;
+	this->happiness=conso.happiness;
+	this->hydration=conso.hydration;
+	return *this;
+}

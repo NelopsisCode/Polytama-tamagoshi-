@@ -1,1 +1,7 @@
-id;nameItem;numberItem;food;hydration;hygiene;happiness.
+consommable
+4
+001 tacos 2 30 0 -20 35
+002 coca-cola 3 0 25 -10 20
+003 spagetti 2 25 0 -15 15
+004 salade-verte 2 10 0 0 -10
+id nameItem numberItem food hydration hygiene happiness

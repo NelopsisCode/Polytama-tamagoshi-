@@ -50,6 +50,5 @@ void Item::setNumberItem(const unsigned int & nbItem)
 
 void Item::printItem()const
 {
-	cout <<nameItem<<endl;
-	cout <<numberItem<<endl;
+	cout <<idItem<<", "<<nameItem<<" ("<<numberItem<<") "<<endl;
 }

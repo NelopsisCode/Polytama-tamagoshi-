@@ -1,35 +1,27 @@
 
 #ifndef INVENTORY_H
 #define INVENTORY_H
-#include <bits/stl_vector.h>
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Item.h"
+#include <cstring>
+#include <stdlib.h>
+#include <time.h>
+#include "InventoryConsommable.h"
+#include "InventoryClothes.h"
+
 
 using namespace std;
 class Inventory {
 public:
-	
-	//Constructeur/Destructeur
-	Inventory();
-	Inventory(const vector <Item>& itemBo);
-	~Inventory();
-	
-	//GET/SET
-	void setItemBoard(const vector <Item> & itemBo);
-	vector<Item> getItemBoard()const;
-	
-	//Fonctions membres
-	void loadIndexClothes (const string & Index);// charger un fichier de vetements dans l'inventaire
-	void loadIndexConsommable (const string & Index);// charger un fichier de consommables dans l'inventaire
-	void saveIndex (const string & Index);// sauver l'inventaire dans un fichier
-	void printInventory()const;// afficher l'inventaire
-	void addInInventory(const Item & it);// ajouter un objet dans l'inventaire
-	void deleteFromInventory(const unsigned int & idItem);//enlever un objet de l'inventaire
-	
-private:
-	vector<Item> itemBoard;
+
+	void loadIndex(const string & Index1,InventoryConsommable & inventConso,
+			const string & Index2,InventoryClothes & inventClot);//charge les fichiers dans les inventaires respectifs
+	void saveIndex (const string & Index1,const InventoryConsommable & inventConso,
+			const string & Index2,const InventoryClothes & inventClot)const;// sauver les inventaires dans leur fichier trespectif
+	void printInventory(const InventoryConsommable & inventConso, const InventoryClothes & inventClot)const;// afficher l'inventaire
+	void testRegressionInventory();//test fonctions
 	
 };
 

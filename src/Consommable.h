@@ -10,7 +10,9 @@ public:
 	
 	//Constructeur/Destructeur
 	Consommable();
-	Consommable(const int &foo, const int& hydra, const int& hyg, const int& happi);
+	Consommable(const unsigned int& idIt,const string& nameIt,
+		const int& nbIt,const int &foo, const int& hydra, 
+		const int& hyg, const int& happi);
 	~Consommable();
 	
 	//SET/GET
@@ -22,6 +24,9 @@ public:
 	int getHygiene ()const;
 	void setHappiness (const int & happi);
 	int getHappiness ()const;
+	
+	//surcharge =
+	Consommable operator=(const Consommable& conso);
 	
 
 	

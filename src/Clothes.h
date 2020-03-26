@@ -3,19 +3,20 @@
 #define CLOTHES_H
 #include "Item.h"
 
-enum IdBody{ Head,Chest,Accessory };
+enum IdBody{ HEAD,CHEST,ACCESSORY };
 
 class Clothes : public Item {
 public:
 	
 	//Constructeur/Destructeur
 	Clothes();
-	Clothes(const IdBody& idClo);
+	Clothes(const IdBody & slotC, const unsigned int & idIt, 
+		const string & nameIt, const int & nbIt);
 	~Clothes();
 	
 	//SET/GET
-	void setClothes (const IdBody & IdClo);
-	IdBody getClothes ()const; //renvoie l'emplaçement du vêtement
+	void setSlotClothes (const IdBody & slotC);
+	IdBody getSlotClothes ()const; //renvoie l'emplaçement du vêtement
 	
 	
  	Clothes operator=(const Clothes& cloth);// surcharge du =
