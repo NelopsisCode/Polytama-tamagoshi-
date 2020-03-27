@@ -3,7 +3,7 @@
 int main(){
 
 	Polytama popo;
-	
+	//popo.polytamaTestRegression();
 	popo.polytamaTest();
 
 	return 0;

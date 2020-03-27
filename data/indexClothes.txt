@@ -1,0 +1,7 @@
+clothes
+4
+10 sweat 1 2
+11 casquette 1 1
+12 haut-de-forme 1 1
+13 lunette 1 3
+id nameItem numberItem(=1) slotClothes(HEAD=1, CHEST=2, ACCESSORY=3)

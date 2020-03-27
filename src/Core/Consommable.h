@@ -10,7 +10,7 @@ public:
 	
 	//Constructeur/Destructeur
 	Consommable();
-	Consommable(const unsigned int& idIt,const string& nameIt,
+	Consommable(const unsigned int & idIt,const string& nameIt,
 		const int& nbIt,const int &foo, const int& hydra, 
 		const int& hyg, const int& happi);
 	~Consommable();

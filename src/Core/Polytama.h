@@ -11,12 +11,13 @@
 #include "Item.h" //consommable + clothes
 #include "Consommable.h"
 #include "Clothes.h"
-#include "Inventory.h"
+#include "InventoryConsommable.h"
+#include "InventoryClothes.h"
 
 
 using namespace std;
 
-const unsigned int DROPRATE = 2 ; //(chaque bar perd 1 touutes les 2 min)
+const unsigned int DROPRATE = 1 ; //(chaque bar perd 1 toutes les DROPRATE min)
 
 class Polytama
 {
@@ -25,10 +26,12 @@ public:
 
 //Constructeur
 	Polytama();
+
+	Polytama(const string & name);
 	
 	~Polytama();
 
-//Accesseur et mutateur
+//Accesseur
 	string getName()const;
 
 	Bar getHealth()const;
@@ -38,6 +41,10 @@ public:
 	Bar getJoy()const;
 
 	Bar getHygiene()const;
+
+	Bar getThirst()const;
+
+	void setName(const string & name);
 
 //Fonction membres
 	void consume(const Consommable & c);
@@ -54,9 +61,11 @@ public:
 
 	void save(const string & filename)const;
 
-	void loadSave (const string & filename, double & time);
+	void loadSave (const string & filename, long int & time);
 
-	void pastTime(const double & time);
+	void pastTime(const long int & time);
+
+	void polytamaTestRegression();
 
 	void polytamaTest();
 

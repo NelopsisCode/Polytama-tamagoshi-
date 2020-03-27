@@ -41,14 +41,13 @@ void InventoryConsommable::loadIndexConsommable (const string & Index)
 			index>>endFile;
 			for(unsigned int i=0; i<endFile; i++)
 			{
-				cout << "je suis la"<<endl;
 				index>>idIt>>nameIt>>nbIt>>foo>>hydra>>hyg>>happi;
 				Consommable conso(idIt, nameIt, nbIt, foo, hydra, hyg, happi);
 				consommableBoard.push_back(conso);
 			}
 		}else 
 		{
-			cout << "Ce n'est pas le bon fichier"<<endl;
+			cout << "Ce n'est pas le bon fichier consommable"<<endl;
 		}
 	}else
 	{
@@ -82,11 +81,11 @@ void InventoryConsommable::saveIndexConsommable (const string & Index)const
 			}
 		}else
 		{
-			cout<<"Ce ne sont pas les bons fichiers"<<endl;
+			cout<<"Ce n'est pas le bon fichier consommable"<<endl;
 		}
 	}else
 	{
-		cout<<"Erreur dans l'ouverture des fichiers"<<endl;
+		cout<<"Erreur dans l'ouverture du fichier consommable"<<endl;
 	}
 	index.close();
 }

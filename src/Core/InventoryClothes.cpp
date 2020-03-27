@@ -36,19 +36,19 @@ void InventoryClothes::loadIndexClothes (const string & Index)
 		if (type=="clothes")
 		{
 			unsigned int idIt, nbIt, slClo, endFile;
-			string mot, nameIt;
+			string nameIt;
 			IdBody slotC;
 			index>>endFile;
 			for(unsigned int i; i<endFile; i++)
 			{
-				index>>idIt>>mot>>nameIt>>mot>>nbIt>>mot>>slClo;
+				index>>idIt>>nameIt>>nbIt>>slClo;
 				slotC=(IdBody) slClo ;
 				Clothes clot(slotC,idIt,nameIt,nbIt);
 				clothesBoard.push_back(clot);
 			}
 		}else 
 		{
-			cout << "Ce n'est pas le bon fichier"<<endl;
+			cout << "Ce n'est pas le bon fichier clothes"<<endl;
 		}
 	}else
 	{
@@ -83,11 +83,11 @@ void InventoryClothes::saveIndexClothes (const string & Index)const
 			}
 		}else
 		{
-			cout<<"Ce ne sont pas les bons fichiers"<<endl;
+			cout<<"Ce n'est pas le bon fichier clothes"<<endl;
 		}
 	}else
 	{
-		cout<<"Erreur dans l'ouverture des fichiers"<<endl;
+		cout<<"Erreur dans l'ouverture du fichier clothes"<<endl;
 	}
 	index.close();
 }

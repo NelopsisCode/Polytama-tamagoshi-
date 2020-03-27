@@ -5,35 +5,32 @@ CC = g++
 
 all: bin/testPolytama
 
-bin/testPolytama: obj/testPolytama.o obj/Polytama.o obj/Bar.o obj/Inventory.o obj/InventoryClothes.o obj/InventoryConsommable.o obj/Clothes.o obj/Consommable.o obj/Item.o 
-	$(CC) -g obj/testPolytama.o obj/Polytama.o obj/Bar.o obj/Inventory.o obj/InventoryClothes.o obj/InventoryConsommable.o obj/Clothes.o obj/Consommable.o obj/Item.o  -o bin/testPolytama
+bin/testPolytama: obj/testPolytama.o obj/Polytama.o obj/Bar.o  obj/InventoryClothes.o obj/InventoryConsommable.o obj/Clothes.o obj/Consommable.o obj/Item.o 
+	$(CC) -g obj/testPolytama.o obj/Polytama.o obj/Bar.o  obj/InventoryClothes.o obj/InventoryConsommable.o obj/Clothes.o obj/Consommable.o obj/Item.o  -o bin/testPolytama
 
-obj/testPolytama.o: src/testPolytama.cpp
-	$(CC) $(FLAGS) -c src/testPolytama.cpp -o obj/testPolytama.o
+obj/testPolytama.o: src/Core/testPolytama.cpp
+	$(CC) $(FLAGS) -c src/Core/testPolytama.cpp -o obj/testPolytama.o
 
-obj/Polytama.o:	src/Polytama.cpp src/Polytama.h src/Clothes.h src/Consommable.h src/Inventory.h
-	$(CC) $(FLAGS) -c src/Polytama.cpp -o obj/Polytama.o
+obj/Polytama.o:	src/Core/Polytama.cpp src/Core/Polytama.h src/Core/Clothes.h src/Core/Consommable.h src/Core/InventoryClothes.h src/Core/InventoryConsommable.h
+	$(CC) $(FLAGS) -c src/Core/Polytama.cpp -o obj/Polytama.o
 
-obj/Bar.o: src/Bar.cpp src/Bar.h
-	$(CC) $(FLAGS) -c src/Bar.cpp -o obj/Bar.o
+obj/Bar.o: src/Core/Bar.cpp src/Core/Bar.h
+	$(CC) $(FLAGS) -c src/Core/Bar.cpp -o obj/Bar.o
 	
-obj/Inventory.o : src/Inventory.cpp src/Inventory.h src/InventoryClothes.h src/InventoryConsommable.h 
-	$(CC) $(FLAGS) -c src/Inventory.cpp -o obj/Inventory.o
+obj/InventoryClothes.o : src/Core/InventoryClothes.cpp src/Core/InventoryClothes.h src/Core/Item.h src/Core/Clothes.h 
+	$(CC) $(FLAGS) -c src/Core/InventoryClothes.cpp -o obj/InventoryClothes.o
 	
-obj/InventoryClothes.o : src/InventoryClothes.cpp src/InventoryClothes.h src/Item.h src/Clothes.h 
-	$(CC) $(FLAGS) -c src/InventoryClothes.cpp -o obj/InventoryClothes.o
+obj/InventoryConsommable.o : src/Core/InventoryConsommable.cpp src/Core/InventoryConsommable.h  src/Core/Item.h src/Core/Consommable.h
+	$(CC) $(FLAGS) -c src/Core/InventoryConsommable.cpp -o obj/InventoryConsommable.o
 	
-obj/InventoryConsommable.o : src/InventoryConsommable.cpp src/InventoryConsommable.h  src/Item.h src/Consommable.h
-	$(CC) $(FLAGS) -c src/InventoryConsommable.cpp -o obj/InventoryConsommable.o
-	
-obj/Clothes.o: src/Clothes.cpp src/Clothes.h 
-	$(CC) $(FLAGS) -c src/Clothes.cpp -o obj/Clothes.o
+obj/Clothes.o: src/Core/Clothes.cpp src/Core/Clothes.h 
+	$(CC) $(FLAGS) -c src/Core/Clothes.cpp -o obj/Clothes.o
 
-obj/Consommable.o: src/Consommable.cpp src/Consommable.h
-	$(CC) $(FLAGS) -c src/Consommable.cpp -o obj/Consommable.o
+obj/Consommable.o: src/Core/Consommable.cpp src/Core/Consommable.h
+	$(CC) $(FLAGS) -c src/Core/Consommable.cpp -o obj/Consommable.o
 
-obj/Item.o: src/Item.cpp src/Item.h
-	$(CC) $(FLAGS) -c src/Item.cpp -o obj/Item.o
+obj/Item.o: src/Core/Item.cpp src/Core/Item.h
+	$(CC) $(FLAGS) -c src/Core/Item.cpp -o obj/Item.o
 
 	
 
