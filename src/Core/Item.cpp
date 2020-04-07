@@ -15,9 +15,6 @@ Item::Item(const string & nameIt, const unsigned int & idIt)
 	idItem=idIt;
 }
 
-Item::~Item() 
-{// je sais pas si il est vraiment nécessaire
-}
 string Item::getNameItem()const
 {
 	return nameItem;
@@ -50,5 +47,5 @@ void Item::setNumberItem(const unsigned int & nbItem)
 
 void Item::printItem()const
 {
-	cout <<idItem<<", "<<nameItem<<" ("<<numberItem<<") "<<endl;
+	cout <<nameItem<<" ("<<numberItem<<") "<<endl;
 }

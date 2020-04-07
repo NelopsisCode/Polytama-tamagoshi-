@@ -1,7 +1,16 @@
 consommable
-4
-001 tacos 2 30 0 -20 35
-002 coca-cola 3 0 25 -10 20
-003 spagetti 2 25 0 -15 15
-004 salade-verte 2 10 0 0 -10
+9
+1 tacos 11 30 0 -20 35
+2 coca-cola 25 0 25 -10 20
+3 spagetti 15 25 0 -15 15
+4 salade-verte 5 10 0 0 -10
+5 badoit 14 0 50 10 5
+6 cookies 0 5 -5 20 7
+0 cookies 0 5 -5 20 7
+0 cookies 0 5 -5 20 7
+0 cookies 0 5 -5 20 7
+u 0 0 20 0 0
+10 sushi 0 10 0 0 0
+11 chips 0 5 0 -10 10
+
 id nameItem numberItem food hydration hygiene happiness

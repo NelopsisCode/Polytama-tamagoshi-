@@ -1,7 +1,10 @@
 clothes
 4
-10 sweat 1 2
-11 casquette 1 1
-12 haut-de-forme 1 1
-13 lunette 1 3
-id nameItem numberItem(=1) slotClothes(HEAD=1, CHEST=2, ACCESSORY=3)
+100 sweat 0 1
+101 sombrero 0 0
+102 casquette 0 0
+103 haut-de-forme 1 0
+104 lunette 0 2
+105 monocle 0 2
+106 T-shirt-Polytech 0 1
+id nameItem numberItem(=1) slotClothes(HEAD=0, CHEST=1, ACCESSORY=2)

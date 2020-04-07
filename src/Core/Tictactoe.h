@@ -2,6 +2,7 @@
 #define TICTACTOE_H
 
 #include <iostream>
+#include "Mini_Game.h"
 
 using namespace std;
 
@@ -49,10 +50,12 @@ public:
 //Game loop
 	void play();
 
+	bool tropheeTictactoe;
+
 private:
 	
 	char boardTictactoe[TAILLE][TAILLE];
-	bool tropheeTictactoe;
+	
 
 };
 

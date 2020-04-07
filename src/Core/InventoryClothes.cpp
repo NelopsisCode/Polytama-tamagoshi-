@@ -39,10 +39,10 @@ void InventoryClothes::loadIndexClothes (const string & Index)
 			string nameIt;
 			IdBody slotC;
 			index>>endFile;
-			for(unsigned int i; i<endFile; i++)
+			for(unsigned int i=0; i<endFile; i++)
 			{
 				index>>idIt>>nameIt>>nbIt>>slClo;
-				slotC=(IdBody) slClo ;
+				slotC=(IdBody) slClo;
 				Clothes clot(slotC,idIt,nameIt,nbIt);
 				clothesBoard.push_back(clot);
 			}
@@ -64,6 +64,17 @@ unsigned int InventoryClothes::calculNumberClothes()const
 	return clothesBoard.size();
 }
 
+unsigned int InventoryClothes::NumberClothes()const
+{
+	unsigned int a = 0, size;
+	size=clothesBoard.size();
+	for (unsigned int i=0; i<size; i++)
+	{
+		a=a+clothesBoard[i].getNumberItem();
+	}
+	return a;
+}
+
 void InventoryClothes::saveIndexClothes (const string & Index)const
 {
 	fstream index (Index.c_str());
@@ -73,7 +84,7 @@ void InventoryClothes::saveIndexClothes (const string & Index)const
 		index>>mot;
 		if(mot=="clothes")
 		{
-			index<<mot<<endl;
+			index<<endl;
 			index<<calculNumberClothes()<<endl;
 			for(unsigned int i=0; i<clothesBoard.size(); i++)
 			{
@@ -94,7 +105,7 @@ void InventoryClothes::saveIndexClothes (const string & Index)const
 
 void InventoryClothes::printInventoryClothes()const 
 {
-	cout<<"Voici vos vétements et accessoires"<<endl;
+	cout<<"Voici vos vï¿½tements et accessoires restants"<<endl;
 	for (unsigned int i =0; i<clothesBoard.size(); i++)
 	{
 		if (clothesBoard[i].getNumberItem()!=0)
@@ -108,13 +119,17 @@ void InventoryClothes::addInInventoryClothes(const Clothes & clot)
 {
 	unsigned int i=0;
 	unsigned int size=clothesBoard.size();
-	while ((i<size)&&(clothesBoard[i].getNameItem()!=clot.getNameItem()))
+	while ((i<size)&&(clothesBoard[i].getIdItem()!=clot.getIdItem()))
 	{ 
 		i++;
 	};
-	if (i<size) 
+	if (i<size)
 	{
+		if(clothesBoard[i].getNumberItem()<1)
+		{
 			clothesBoard[i].setNumberItem(clothesBoard[i].getNumberItem()+1);
+		}
+		
 	}else
 	{
 		clothesBoard.push_back(clot);
@@ -129,10 +144,48 @@ void InventoryClothes::deleteFromInventoryClothes(const unsigned int & idIt)
 	{
 		i++;
 	}
-	if ((i<size)&&(clothesBoard[i].getNumberItem()!=0))
+	assert(i<size);
+	if (clothesBoard[i].getNumberItem()!=0)
 	{
 		clothesBoard[i].setNumberItem(clothesBoard[i].getNumberItem()-1);
 	}
 }
 
+Clothes InventoryClothes::searchInInventoryClothes(const string& name)const
+{
+	unsigned int i=0;
+	unsigned int size=clothesBoard.size();
+	while((i<size)&&(clothesBoard[i].getNameItem()!=name))
+	{
+		i++;
+	}
+	if(i<size)
+	{
+		return clothesBoard[i];
+	}else 
+	{
+		IdBody slot ;
+		Clothes clot(slot,0,"null",0);
+		return clot;
+	}
+}
+
+Clothes InventoryClothes::searchIdInInventoryClothes(const unsigned int & id)const
+{
+	unsigned int i=0;
+	unsigned int size=clothesBoard.size();
+	while((i<size)&&(clothesBoard[i].getIdItem()!=id))
+	{
+		i++;
+	}
+	if(i<size)
+	{
+		return clothesBoard[i];
+	}else 
+	{
+		IdBody slot ;
+		Clothes clot(slot,0,"null",0);
+		return clot;
+	}
+}
 

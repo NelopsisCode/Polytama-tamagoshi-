@@ -60,6 +60,16 @@ unsigned int InventoryConsommable::calculNumberConsommable()const
 	return consommableBoard.size();
 }
 
+unsigned int InventoryConsommable::NumberConsommable()const
+{
+	unsigned int a = 0, size;
+	size=consommableBoard.size();
+	for (unsigned int i=0; i<size; i++)
+	{
+		a=a+consommableBoard[i].getNumberItem();
+	}
+	return a;
+}
 
 void InventoryConsommable::saveIndexConsommable (const string & Index)const
 {
@@ -70,7 +80,7 @@ void InventoryConsommable::saveIndexConsommable (const string & Index)const
 		index>>mot;
 		if (mot=="consommable")
 		{
-			index<<mot<<endl;
+			index<<endl;
 			index<<calculNumberConsommable()<<endl;
 			for(unsigned int i=0; i<consommableBoard.size(); i++)
 			{
@@ -92,7 +102,7 @@ void InventoryConsommable::saveIndexConsommable (const string & Index)const
 
 void InventoryConsommable::printInventoryConsommable()const 
 {
-	cout<<"Voici vos denrées alimentaires"<<endl;
+	cout<<"Voici vos denrï¿½es alimentaires restants"<<endl;
 	for (unsigned int i =0; i<consommableBoard.size(); i++)
 	{
 		if (consommableBoard[i].getNumberItem()!=0)
@@ -127,10 +137,45 @@ void InventoryConsommable::deleteFromInventoryConsommable(const unsigned int & i
 	{
 		i++;
 	}
-	if ((i<size)&&(consommableBoard[i].getNumberItem()!=0))
+	assert(i<size);
+	if (consommableBoard[i].getNumberItem()!=0)
 	{
 		consommableBoard[i].setNumberItem(consommableBoard[i].getNumberItem()-1);
 	}
 }
 
+Consommable InventoryConsommable::searchInInventoryConsommable(const string& name)const
+{
+	unsigned int i=0;
+	unsigned int size=consommableBoard.size();
+	while((i<size)&&(consommableBoard[i].getNameItem()!=name))
+	{
+		i++;
+	}
+	if(i<size)
+	{
+		return consommableBoard[i];
+	}else 
+	{
+		Consommable conso(0,"null",0,0,0,0,0);
+		return conso;
+	}
+}
 
+Consommable InventoryConsommable::searchIdInInventoryConsommable(const unsigned int& id)const
+{
+	unsigned int i=0;
+	unsigned int size=consommableBoard.size();
+	while((i<size)&&(consommableBoard[i].getIdItem()!=id))
+	{
+		i++;
+	}
+	if(i<size)
+	{
+		return consommableBoard[i];
+	}else 
+	{
+		Consommable conso(0,"null",0,0,0,0,0);
+		return conso;
+	}
+}

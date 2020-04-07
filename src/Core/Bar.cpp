@@ -10,14 +10,14 @@ Bar::Bar(){
     typeBar = "";
 }
 
-Bar::Bar(unsigned int val){
+Bar::Bar(const unsigned int& val){
     maxBar = 100;
     assert (val <= 100);
     valueBar = val;
 }
 
 
-void Bar::setValue(unsigned int val){
+void Bar::setValue(const unsigned int& val){
     assert (val<=maxBar);
     valueBar = val;
 }
@@ -26,7 +26,7 @@ unsigned int Bar::getValue()const{
     return valueBar;
 }
 
-void Bar::setMaxBar(unsigned int max){
+void Bar::setMaxBar(const unsigned int& max){
     assert (max >= valueBar);
     maxBar = max;
 }
@@ -35,7 +35,7 @@ unsigned int Bar::getMaxBar()const{
     return maxBar;
 }
 
-void Bar::setTypeBar(string type){
+void Bar::setTypeBar(const string& type){
     typeBar = type;
 }
 
@@ -43,7 +43,7 @@ string Bar::getTypeBar()const{
     return typeBar;
 }
 
-void Bar::changeValue(int valAdded){
+void Bar::changeValue(const int& valAdded){
     assert((valueBar+valAdded)<= maxBar);
     valueBar = valueBar+valAdded;
 }
@@ -53,18 +53,23 @@ void Bar::printValue() const{
 }
 
 void Bar::operator+=(const unsigned int & val){
-    if (valueBar <= maxBar - val)
+    cout << val <<endl;
+    if (valueBar <= maxBar - val and val >= 0)
     {
         valueBar += val;
     }
-    else
+    else if (val > 0)
     {
         valueBar = 100;
-    } 
+    }
+    else
+    {
+        valueBar = 0;
+    }
 }
 
 void Bar::operator-=(const unsigned int & val){
-    if (valueBar >= val)
+    if (valueBar >= val and val >= 0)
     {
         valueBar -= val;
     }
@@ -88,7 +93,7 @@ void Bar::regressionBar(){
     assert(b2.getValue()==50 && b2.getTypeBar() == "" && b2.getMaxBar() == 100);
     cout<<"ok";
 
-    cout<<"test accsseurs";
+    cout<<"test accesseurs";
     b2.setMaxBar(200);
     b2.setTypeBar("SeAz19 **");
     b2.setValue(200);

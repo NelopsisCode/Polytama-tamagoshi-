@@ -14,8 +14,6 @@ Clothes::Clothes(const IdBody & slotC, const unsigned int & idIt,
 	numberItem=nbIt;
 }
 
-Clothes::~Clothes(){}
-
 void Clothes::setSlotClothes (const IdBody & slotC)
 {
 	slotClothes=slotC;
@@ -24,6 +22,13 @@ void Clothes::setSlotClothes (const IdBody & slotC)
 IdBody Clothes::getSlotClothes ()const
 {
 	return slotClothes;
+}
+
+void Clothes::printClothes()const
+{
+	cout << "name: "<< nameItem << endl;
+	cout << "Id: "<< idItem << endl;
+	cout << "slot: "<< slotClothes << endl;
 }
 
 //surcharge du =
