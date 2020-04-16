@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['clothes',['Clothes',['../classClothes.html',1,'']]],
-  ['consommable',['Consommable',['../classConsommable.html',1,'']]],
-  ['consume',['consume',['../classPolytama.html#a87c69dab22459ab17b65d6cee0bb6e0f',1,'Polytama']]]
+  ['bar',['Bar',['../classBar.html',1,'Bar'],['../classBar.html#a9cae2188fcc6cce41caa7898c64548d1',1,'Bar::Bar()'],['../classBar.html#afc1b4598fbeb6e45c5a837fb467d74b7',1,'Bar::Bar(const unsigned int &amp;val)']]]
 ];

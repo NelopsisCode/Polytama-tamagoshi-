@@ -4,7 +4,7 @@ using namespace std;
 
 Mini_Game::Mini_Game()
 {
-	trophee = false;
+	trophee = true;
 	reward = 0;
 }
 
@@ -33,7 +33,7 @@ void Mini_Game::selectAndPlayMiniGame()
 		case 1 : { 
 			Game_TicTacToe ttt;
 			ttt.play();
-			trophee = ttt.tropheeTictactoe;
+			trophee = ttt.getTropheeTictactoe();
 			if (trophee == true)
 			{
 				generateReward();
@@ -79,7 +79,7 @@ void Mini_Game::generateReward()
 		{
 			//tirage d'un Clothes
 			min = 100; 
-			max = 104; //100+nb de vêtements
+			max = 109; //100+nb de vêtements
 			plage = max - min + 1;
 			id = (rand() % plage) + min;
 		}
@@ -87,12 +87,13 @@ void Mini_Game::generateReward()
 		{
 			//tirage d'un consommable
 			min = 1; 
-			max = 6; //1+nb de consommable 
+			max = 10; //1+nb de consommable 
 			plage = max - min + 1;
 			id = (rand() % plage) + min;
 			
 		}
 		reward = id;
+		cout << reward << endl;
 	}
 	
 	

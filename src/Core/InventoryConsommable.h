@@ -106,7 +106,7 @@ public:
 	 * @param id Identifiant du consommable a chercher
 	 * @return Consommable
 	 */
-	Consommable searchIdInInventoryConsommable(const unsigned int& id)const; //cherche un objet dans l'inventaire d'apres son id
+	Consommable searchIdInInventoryConsommable(const unsigned int& idIt)const; //cherche un objet dans l'inventaire d'apres son id
 	
 private:
 	vector<Consommable> consommableBoard;

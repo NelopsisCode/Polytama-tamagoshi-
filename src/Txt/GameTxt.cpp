@@ -207,7 +207,7 @@ void GameTxtPrintTama(const Polytama & polytama){
 			clear();
 			refresh();
 			printw("\n");
-			polytama.takeAbath();
+			polytama.takeABath();
 			noecho();
 			if(getch()!=410){
 			echo();
@@ -236,7 +236,7 @@ void GameTxtPrintTama(const Polytama & polytama){
 				{
 					Consommable conso=manger.searchIdInInventoryConsommable(game.getReward());
 					manger.addInInventoryConsommable(conso);
-					printw("Vous avez gagné ");
+					printw("Vous avez gagnï¿½ ");
 					printw (conso.getNameItem().c_str());
 					printw(" !\n");
 					manger.saveIndexConsommable("data/indexConsommable.txt");
@@ -245,7 +245,7 @@ void GameTxtPrintTama(const Polytama & polytama){
 				{
 					Clothes clot=sweatshirt.searchIdInInventoryClothes(game.getReward());
 					sweatshirt.addInInventoryClothes(clot);
-					printw("Vous avez gagné ");
+					printw("Vous avez gagnï¿½ ");
 					printw (clot.getNameItem().c_str());
 					printw(" !\n");
 					sweatshirt.saveIndexClothes("data/indexClothes.txt");

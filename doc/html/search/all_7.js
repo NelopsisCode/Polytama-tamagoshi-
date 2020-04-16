@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['pasttime',['pastTime',['../classPolytama.html#a21bfc475f20bac9846944740365b528b',1,'Polytama']]],
-  ['polytama',['Polytama',['../classPolytama.html',1,'Polytama'],['../classPolytama.html#af8beb4ffa9ef963af8c3d466002fea73',1,'Polytama::Polytama()'],['../classPolytama.html#ad09c97cbcc26df7616080523595799cf',1,'Polytama::Polytama(const string &amp;name)']]],
-  ['polytamatestregression',['polytamaTestRegression',['../classPolytama.html#a3f5f63473f40a2e3fe2a9e0e73646bae',1,'Polytama']]],
-  ['printpolytama',['printPolytama',['../classPolytama.html#a60ba9631e746ee7725287366d42121e0',1,'Polytama']]]
+  ['maxsearch',['maxSearch',['../classGame__TicTacToe.html#a0d0a812a09892b53b8a8b607f0b19c6d',1,'Game_TicTacToe']]],
+  ['mini_5fgame',['Mini_Game',['../classMini__Game.html',1,'Mini_Game'],['../classMini__Game.html#a1728b1cb0669b0647470d492111c35e8',1,'Mini_Game::Mini_Game()']]],
+  ['minimax',['minimax',['../classGame__TicTacToe.html#a0d7b7877d18a2559a68cb20bcf202441',1,'Game_TicTacToe']]],
+  ['minsearch',['minSearch',['../classGame__TicTacToe.html#ac5290b95526917a75ce96df4a2aa8bf0',1,'Game_TicTacToe']]],
+  ['move',['Move',['../structMove.html',1,'']]]
 ];

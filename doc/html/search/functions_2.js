@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['gethealth',['getHealth',['../classPolytama.html#a32b469dd504b3bca4ecefbaebf7b0708',1,'Polytama']]],
-  ['gethunger',['getHunger',['../classPolytama.html#a1b97679747c0816c24bcf9558aa2689c',1,'Polytama']]],
-  ['gethygiene',['getHygiene',['../classPolytama.html#a2aa6b42dedd3a0f08c2a85781bb72bef',1,'Polytama']]],
-  ['getjoy',['getJoy',['../classPolytama.html#a8033a39fe8325fbcb6afda292671e967',1,'Polytama']]],
-  ['getname',['getName',['../classPolytama.html#ae7a7885587c2db3030a6f3880b641ec8',1,'Polytama']]],
-  ['getthirst',['getThirst',['../classPolytama.html#ae39e844da439892d45278026a88e1740',1,'Polytama']]]
+  ['calculnumberclothes',['calculNumberClothes',['../classInventoryClothes.html#a50a0975d531aebed63307ffe244429ff',1,'InventoryClothes']]],
+  ['calculnumberconsommable',['calculNumberConsommable',['../classInventoryConsommable.html#a1c6bb36eaf5119d8a15d704c37693c9d',1,'InventoryConsommable']]],
+  ['changevalue',['changeValue',['../classBar.html#ab52e01d971bdee339c4e49401e029334',1,'Bar']]],
+  ['clothes',['Clothes',['../classClothes.html#a3df0bb45365fe4b9c82fde551207aa18',1,'Clothes::Clothes()'],['../classClothes.html#a7c15bb5e3c311eb53f52cef8e1f92f1b',1,'Clothes::Clothes(const IdBody &amp;slotC, const unsigned int &amp;idIt, const string &amp;nameIt, const int &amp;nbIt)']]],
+  ['consommable',['Consommable',['../classConsommable.html#ad87f63d0fef7c1424270bdf334857d4d',1,'Consommable::Consommable()'],['../classConsommable.html#a8e93dc1bc6528998cc11a05ff742bc62',1,'Consommable::Consommable(const unsigned int &amp;idIt, const string &amp;nameIt, const int &amp;nbIt, const int &amp;foo, const int &amp;hydra, const int &amp;hyg, const int &amp;happi)']]],
+  ['consume',['consume',['../classPolytama.html#a87c69dab22459ab17b65d6cee0bb6e0f',1,'Polytama']]]
 ];

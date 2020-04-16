@@ -162,11 +162,11 @@ Consommable InventoryConsommable::searchInInventoryConsommable(const string& nam
 	}
 }
 
-Consommable InventoryConsommable::searchIdInInventoryConsommable(const unsigned int& id)const
+Consommable InventoryConsommable::searchIdInInventoryConsommable(const unsigned int& idIt)const
 {
 	unsigned int i=0;
 	unsigned int size=consommableBoard.size();
-	while((i<size)&&(consommableBoard[i].getIdItem()!=id))
+	while((i<size)&&(consommableBoard[i].getIdItem()!=idIt))
 	{
 		i++;
 	}

@@ -5,7 +5,7 @@ using namespace std;
 
 /**
 \class <Bar>
-@brief Cette classe permet de créer et de gérer des jauges de vie, de faim, de soif, d'hygiene et de joie
+@brief Un Bar est une jauge, ici principalement de vie, de faim, de soif, d'hygiene et de joie
 
 @param valueBar valeur de la jauge\n
 @param maxBar le maximum que peut atteindre la jauge\n

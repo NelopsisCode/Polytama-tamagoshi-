@@ -20,6 +20,22 @@ Game_TicTacToe::Game_TicTacToe()
 }
 
 
+const char * Game_TicTacToe::getBoard()const
+{
+	return &boardTictactoe[0][0];
+}
+
+	
+bool Game_TicTacToe::getTropheeTictactoe()const
+{
+	return tropheeTictactoe;
+}
+
+void Game_TicTacToe::setTropheeTictactoe(const bool & t)
+{
+	tropheeTictactoe = t;
+}
+
 void Game_TicTacToe::printBoardTictactoe()const
 {
 
@@ -54,12 +70,12 @@ void Game_TicTacToe::setCase(const unsigned int & x,
 	{
 		if ((x<1) || (x>3) || (y<1) || (y>3))
 		{
-			cout<<"Votre pion est hors du jeu... Recommencez"<<endl;
+			//cout<<"Votre pion est hors du jeu... Recommencez"<<endl;
 			isset = false;
 		}
 		else if ((boardTictactoe[x-1][y-1]=='X') || (boardTictactoe[x-1][y-1]=='O'))
 		{
-			cout<<"Un pion se trouve deja sur cette case... Recommencez"<<endl;
+			//cout<<"Un pion se trouve deja sur cette case... Recommencez"<<endl;
 			isset = false;
 		}
 	}
@@ -107,18 +123,18 @@ bool Game_TicTacToe::gameOver(const char & player)const
 
 	if (tie())
 	{ 
-		cout << "It's a tie" <<endl;
+		//cout << "It's a tie" <<endl;
 		return true;
 	}
 
 	if (win(AI))
 	{
-		cout << "Computer won" <<endl;
+		//cout << "Computer won" <<endl;
 		return true;
 	}
 	if (win (HUMAN))
 	{
-		cout << "You won" <<endl;
+		//cout << "You won" <<endl;
 		return true;
 	}
 
@@ -235,7 +251,6 @@ int Game_TicTacToe::minSearch(char AIboard[3][3])const
 }
 
 
-
 void Game_TicTacToe::play()
 {
 	int tour;
@@ -286,3 +301,4 @@ void Game_TicTacToe::play()
     }
 
 }
+

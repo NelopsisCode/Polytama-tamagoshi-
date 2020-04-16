@@ -3,5 +3,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="Polytama",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classPolytama.html",tooltip="Un Polytama est un petit être doté de besoins et de sentiments. Il peut aussi porter des vêtements po..."];
+  Node0 [label="Move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structMove.html",tooltip="Un Move est un choix de case en abscisse et en ordonnee. "];
 }

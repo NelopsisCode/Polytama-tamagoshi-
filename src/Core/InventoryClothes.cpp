@@ -170,11 +170,11 @@ Clothes InventoryClothes::searchInInventoryClothes(const string& name)const
 	}
 }
 
-Clothes InventoryClothes::searchIdInInventoryClothes(const unsigned int & id)const
+Clothes InventoryClothes::searchIdInInventoryClothes(const unsigned int & idIt)const
 {
 	unsigned int i=0;
 	unsigned int size=clothesBoard.size();
-	while((i<size)&&(clothesBoard[i].getIdItem()!=id))
+	while((i<size)&&(clothesBoard[i].getIdItem()!=idIt))
 	{
 		i++;
 	}

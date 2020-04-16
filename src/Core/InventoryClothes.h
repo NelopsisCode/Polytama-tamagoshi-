@@ -107,7 +107,7 @@ public:
 	 * @param id Identifiant d'un vetement a chercher
 	 * @return Vetement( vetement null si il n'est pas present dans l'inventaire)
 	 */
-	Clothes searchIdInInventoryClothes(const unsigned int & id)const;//cherche l'item dans l'inventaire d'apres son id
+	Clothes searchIdInInventoryClothes(const unsigned int & idIt)const;//cherche l'item dans l'inventaire d'apres son id
 	
 private:
 	vector<Clothes> clothesBoard;

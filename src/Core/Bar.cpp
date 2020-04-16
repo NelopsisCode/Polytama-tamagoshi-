@@ -53,7 +53,6 @@ void Bar::printValue() const{
 }
 
 void Bar::operator+=(const unsigned int & val){
-    cout << val <<endl;
     if (valueBar <= maxBar - val and val >= 0)
     {
         valueBar += val;

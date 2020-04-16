@@ -1,0 +1,10 @@
+clothes
+7
+100 sweat 0 1
+101 sombrero 0 0
+102 casquette 0 0
+103 haut-de-forme 0 0
+104 lunette 0 2
+105 monocle 0 2
+106 T-shirt-Polytech 1 1
+id nameItem numberItem(=1) slotClothes(HEAD=0, CHEST=1, ACCESSORY=2)

@@ -1,11 +1,6 @@
 var searchData=
 [
-  ['game',['Game',['../classGame.html',1,'']]],
-  ['game_5ftictactoe',['Game_TicTacToe',['../classGame__TicTacToe.html',1,'']]],
-  ['gethealth',['getHealth',['../classPolytama.html#a32b469dd504b3bca4ecefbaebf7b0708',1,'Polytama']]],
-  ['gethunger',['getHunger',['../classPolytama.html#a1b97679747c0816c24bcf9558aa2689c',1,'Polytama']]],
-  ['gethygiene',['getHygiene',['../classPolytama.html#a2aa6b42dedd3a0f08c2a85781bb72bef',1,'Polytama']]],
-  ['getjoy',['getJoy',['../classPolytama.html#a8033a39fe8325fbcb6afda292671e967',1,'Polytama']]],
-  ['getname',['getName',['../classPolytama.html#ae7a7885587c2db3030a6f3880b641ec8',1,'Polytama']]],
-  ['getthirst',['getThirst',['../classPolytama.html#ae39e844da439892d45278026a88e1740',1,'Polytama']]]
+  ['dab',['dab',['../classPolytama.html#a1a6dea8d5e610226febba8462df0dd75',1,'Polytama']]],
+  ['deletefrominventoryclothes',['deleteFromInventoryClothes',['../classInventoryClothes.html#ae6bfc2aa84343f902765075c7a078c19',1,'InventoryClothes']]],
+  ['deletefrominventoryconsommable',['deleteFromInventoryConsommable',['../classInventoryConsommable.html#a9f0a7cfdb34348797b9851e4d5db7cca',1,'InventoryConsommable']]]
 ];

@@ -3,12 +3,12 @@ OBJ= obj/Polytama.o obj/Bar.o obj/InventoryClothes.o obj/InventoryConsommable.o 
 FLAGS= -g -Wall 
 CC = g++
 
-SDL= -lSDL2 -lSDL2_ttf -lSDL2_image
+SDL= -lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image 
 
 all: bin/testPolytama bin/mainTxt bin/mainSDL
 
-bin/mainSDL: obj/mainSDL.o obj/GameSDL.o $(OBJ) 
-	$(CC) -g obj/mainSDL.o obj/GameSDL.o $(OBJ) -o bin/mainSDL $(SDL)
+bin/mainSDL: obj/mainSDL.o obj/GameSDL.o $(OBJ) obj/TictactoeSDL.o
+	$(CC) -g obj/mainSDL.o obj/GameSDL.o $(OBJ) obj/TictactoeSDL.o -o bin/mainSDL $(SDL)
 
 bin/mainTxt: obj/MainTxt.o obj/GameTxt.o $(OBJ) obj/TictactoeTxt.o
 	$(CC) -g obj/MainTxt.o obj/GameTxt.o $(OBJ) obj/TictactoeTxt.o -o bin/mainTxt -lncurses
@@ -30,7 +30,10 @@ obj/GameTxt.o: src/Txt/GameTxt.cpp src/Txt/GameTxt.h src/Core/Polytama.h src/Txt
 	
 obj/TictactoeTxt.o: src/Txt/TictactoeTxt.cpp src/Txt/TictactoeTxt.h src/Core/Tictactoe.h
 	$(CC) $(FLAGS) -c src/Txt/TictactoeTxt.cpp -o obj/TictactoeTxt.o -lncurses
-	
+
+obj/TictactoeSDL.o: src/Sdl/TictactoeSDL.cpp src/Sdl/TictactoeSDL.h src/Core/Tictactoe.h
+	$(CC) $(FLAGS) -c src/Sdl/TictactoeSDL.cpp -o obj/TictactoeSDL.o $(SDL)
+
 obj/testPolytama.o: src/Core/testPolytama.cpp
 	$(CC) $(FLAGS) -c src/Core/testPolytama.cpp -o obj/testPolytama.o
 

@@ -90,6 +90,10 @@ Retourne la barre de joie du Polytama.
 
 */	
 	Bar getJoy()const;
+
+	void addJoy(const int & val);
+	
+	string getMood()const;
 /**
 @brief Accesseur hygiene
 
@@ -116,6 +120,14 @@ Modifie le nom du Polytama.
 */
 	void setName(const string & name);
 
+	void setHunger(const unsigned int & val);
+
+	void setJoy(const unsigned int & val);
+
+	void setHygiene(const unsigned int & val);
+
+	void setThirst(const unsigned int & val);
+	
 //Fonction membres
 
 /**
@@ -147,7 +159,8 @@ Cela le met de bonne humeur mais le fait transpirer un peu.
 @brief Le Polytama prend un bain. 
 Il est de nouveau tout propre ! 
 */
-	void takeAbath();
+	void takeABath();
+
 /**
 @brief Afficher les jauges et le prénom du Polytama.
 */
