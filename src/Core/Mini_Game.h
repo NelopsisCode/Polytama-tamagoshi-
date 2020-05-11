@@ -2,6 +2,8 @@
 #define MINIGAME_H
 
 #include "Tictactoe.h"
+#include "Hanged.h"
+#include "Memory.h"
 #include <random>
 #include <time.h>
 #include <stdlib.h> 

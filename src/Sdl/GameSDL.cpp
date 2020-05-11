@@ -4,7 +4,7 @@ void GameSdlInit(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&tex
 {
 
 	//Initialisation SDL
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
 	{
 		SDL_Log("Erreur: Initialisation SDL");
 		cout << SDL_GetError() << endl;
@@ -48,11 +48,11 @@ void GameSdlInit(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&tex
 void GameStart(SDL_Window *&window, SDL_Renderer *&renderer, Polytama &polytama)
 {
 
-	CreateImage("data/image/Background.png", window, renderer, 0, 0, true);
+	CreateImage("data/image/Backgroundstart.png", window, renderer, 0, 0, true);
 	SDL_Color white = {0, 0, 0};
 	CreateImage("data/image/Title.png", window, renderer, 0, 0, true);
-	CreateText("Continuer la partie", window, renderer, white, "font.ttf", 50, 230, 200, false);
-	CreateText("Nouvelle partie", window, renderer, white, "font.ttf", 50, 270, 300, false);
+	CreateImage("data/image/ContinueButton.png", window, renderer, 0, 0, true);
+	CreateImage("data/image/NewgameButton.png", window, renderer, 0, 0, true);
 	SDL_RenderPresent(renderer);
 
 	bool startScreen = true;
@@ -64,9 +64,9 @@ void GameStart(SDL_Window *&window, SDL_Renderer *&renderer, Polytama &polytama)
 			switch (event.type)
 			{
 			case SDL_MOUSEBUTTONDOWN:
-				cout << event.button.x << "/" << event.button.y << endl;
+				//cout << event.button.x << "/" << event.button.y << endl;
 				//Continuer
-				if (event.button.x > 250 and event.button.x < 555 and event.button.y > 213 and event.button.y < 255)
+				if (event.button.x > 197 and event.button.x < 633 and event.button.y > 270 and event.button.y < 371)
 				{
 					long int initTime;
 					polytama.loadSave("save.txt", initTime);
@@ -74,32 +74,31 @@ void GameStart(SDL_Window *&window, SDL_Renderer *&renderer, Polytama &polytama)
 					startScreen = false;
 				}
 				//Nouvelle partie
-				else if (event.button.x > 250 and event.button.x < 555 and event.button.y > 314 and event.button.y < 352)
+				else if (event.button.x > 238 and event.button.x < 581 and event.button.y > 393 and event.button.y < 566)
 				{
-					CreateImage("data/image/Background.png", window, renderer, 0, 0, true);
-					CreateText("Etes vous sur?", window, renderer, white, "font.ttf", 70, 0, -200, true);
-					CreateText("Oui", window, renderer, white, "font.ttf", 70, 250, 200, false);
-					CreateText("Non", window, renderer, white, "font.ttf", 70, 250, 300, false);
+					CreateImage("data/image/Backgroundstart.png", window, renderer, 0, 0, true);
+					CreateText("Êtes vous sûr?", window, renderer, white, "data/font/font.ttf", 70, 0, -220, true);
+					CreateText("(cela supprimera la sauvegarde actuelle)", window, renderer, white, "data/font/font.ttf", 20, 0, -180, true);
+					CreateImage("data/image/Yesbutton.png", window, renderer, 0, -60, true);
+					CreateImage("data/image/Nobutton.png", window, renderer, 0, 60, true);
 					SDL_RenderPresent(renderer);
 					bool verif = true;
 					while (verif)
 					{
-
 
 						while (SDL_PollEvent(&event))
 						{
 							switch (event.type)
 							{
 							case SDL_MOUSEBUTTONDOWN:
-								cout << event.button.x << "/" << event.button.y << endl;
 								//oui
-								if (event.button.x > 235 and event.button.x < 319 and event.button.y > 212 and event.button.y < 251)
+								if (event.button.x > 334 and event.button.x < 463 and event.button.y > 195 and event.button.y < 282)
 								{
 									verif = false;
 									createTama(polytama, window, renderer);
 								}
 								//non
-								else if (event.button.x > 247 and event.button.x < 323 and event.button.y > 311 and event.button.y < 353)
+								else if (event.button.x > 334 and event.button.x < 463 and event.button.y > 315 and event.button.y < 404)
 								{
 									verif = false;
 									GameStart(window, renderer, polytama);
@@ -111,10 +110,6 @@ void GameStart(SDL_Window *&window, SDL_Renderer *&renderer, Polytama &polytama)
 					}
 					startScreen = false;
 				}
-				break;
-
-			case SDL_QUIT:
-				startScreen = false;
 				break;
 
 			default:
@@ -132,7 +127,7 @@ string getTxt(SDL_Window *&window, SDL_Renderer *&renderer)
 
 	SDL_Color black = {0, 0, 0};
 	TTF_Font *font = NULL;
-	font = TTF_OpenFont("font.ttf", 50);
+	font = TTF_OpenFont("data/font/font.ttf", 50);
 	bool write = true;
 	SDL_Event event;
 	while (write)
@@ -163,8 +158,8 @@ string getTxt(SDL_Window *&window, SDL_Renderer *&renderer)
 		}
 
 		CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
-		CreateText("Premierement, vous devez lui choisir un nom !", window, renderer, black, "font.ttf", 30, 0, -220, true);
-		CreateText("(Utilisez le clavier pour saisir le nom de votre tama)",window,renderer, black, "font.ttf",15,0,270,true);
+		CreateText("Premierement, vous devez lui choisir un nom !", window, renderer, black, "data/font/font.ttf", 30, 0, -220, true);
+		CreateText("(Utilisez le clavier pour saisir le nom de votre tama)", window, renderer, black, "data/font/font.ttf", 15, 0, 270, true);
 		CreateImage("data/image/tama/Tamachest106.png", window, renderer, 0, 40, true);
 		CreateImage("data/image/tama/Tamaheadj.png", window, renderer, 0, -50, true);
 		if (res != temp)
@@ -205,11 +200,11 @@ void createTama(Polytama &polytama, SDL_Window *&window,
 
 	CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
 	SDL_Color white = {0, 0, 0};
-	CreateText("Bonjour et bienvenue dans Polytama!", window, renderer, white, "font.ttf",  30, 0, -220, true);
+	CreateText("Bonjour et bienvenue dans Polytama!", window, renderer, white, "data/font/font.ttf", 30, 0, -220, true);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(3000);
 	CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
-	CreateText("Ici vous allez vous occuper d'une petite creature appellée Polytama !", window, renderer, white, "font.ttf",  25, 0, -220, true);
+	CreateText("Ici vous allez vous occuper d'une petite creature appellée Polytama !", window, renderer, white, "data/font/font.ttf", 25, 0, -220, true);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(3000);
 	CreateImage("data/image/tama/Tamachest106.png", window, renderer, 0, 40, true);
@@ -221,8 +216,8 @@ void createTama(Polytama &polytama, SDL_Window *&window,
 	do
 	{
 		CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
-		CreateText("Premierement, vous devez lui choisir un nom !", window, renderer, white, "font.ttf", 30, 0, -220, true);
-		CreateText("(Utilisez le clavier pour saisir le nom de votre tama)",window,renderer, white, "font.ttf",15,0,270,true);
+		CreateText("Premierement, vous devez lui choisir un nom !", window, renderer, white, "data/font/font.ttf", 30, 0, -220, true);
+		CreateText("(Utilisez le clavier pour saisir le nom de votre tama)", window, renderer, white, "data/font/font.ttf", 15, 0, 270, true);
 		CreateImage("data/image/tama/Tamachest106.png", window, renderer, 0, 40, true);
 		CreateImage("data/image/tama/Tamaheadj.png", window, renderer, 0, -50, true);
 		SDL_RenderPresent(renderer);
@@ -232,11 +227,11 @@ void createTama(Polytama &polytama, SDL_Window *&window,
 		CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
 		CreateImage("data/image/tama/Tamachest106.png", window, renderer, 0, 40, true);
 		CreateImage("data/image/tama/Tamaheadj.png", window, renderer, 0, -50, true);
-		CreateText("Voulez vous que votre Polytama porte le nom", window, renderer, white, "font.ttf", 30, 0, -220, true);
-		CreateText(name + " ?", window, renderer, white, "font.ttf", 50, 0, -180, true);
-		CreateText("Oui", window, renderer, white, "font.ttf", 60, -80, -130, true);
-		CreateText("Non", window, renderer, white, "font.ttf", 60, 80, -130, true);
-		
+		CreateText("Voulez vous que votre Polytama porte le nom", window, renderer, white, "data/font/font.ttf", 30, 0, -210, true);
+		CreateText(name + " ?", window, renderer, white, "data/font/font.ttf", 50, 0, -180, true);
+		CreateImage("data/image/Yesbutton.png", window, renderer, -180, -70, true);
+		CreateImage("data/image/Nobutton.png", window, renderer, 180, -70, true);
+
 		SDL_RenderPresent(renderer);
 		//bouton de verif
 		bool choice = true;
@@ -249,15 +244,14 @@ void createTama(Polytama &polytama, SDL_Window *&window,
 				switch (event.type)
 				{
 				case SDL_MOUSEBUTTONDOWN:
-					cout << event.button.x << "/" << event.button.y << endl;
 					//oui
-					if (event.button.x > 272 and event.button.x < 365 and event.button.y > 146 and event.button.y < 192)
+					if (event.button.x > 148 and event.button.x < 288 and event.button.y > 179 and event.button.y < 275)
 					{
 						verif = false;
 						choice = false;
 					}
 					//non
-					else if (event.button.x > 429 and event.button.x < 531 and event.button.y > 146 and event.button.y < 192)
+					else if (event.button.x > 504 and event.button.x < 652 and event.button.y > 179 and event.button.y < 275)
 					{
 						choice = false;
 					}
@@ -274,34 +268,33 @@ void createTama(Polytama &polytama, SDL_Window *&window,
 	polytama.setHygiene(50);
 	polytama.setJoy(50);
 	polytama.setThirst(50);
-	
+
 	InventoryConsommable conso;
 	conso.loadIndexConsommable("data/initIndexConsommable.txt");
 	conso.saveIndexConsommable("data/indexConsommable.txt");
 	InventoryClothes clo;
 	clo.loadIndexClothes("data/initIndexClothes.txt");
 	clo.saveIndexClothes("data/indexClothes.txt");
-	
+
 	CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
 	CreateImage("data/image/tama/Tamachest106.png", window, renderer, 0, 40, true);
 	CreateImage("data/image/tama/Tamaheadj.png", window, renderer, 0, -50, true);
-	CreateText("Amusez vous bien avec " + name + "!", window, renderer, white, "font.ttf",  40, 0, -220, true);
+	CreateText("Amusez vous bien avec " + name + "!", window, renderer, white, "data/font/font.ttf", 40, 0, -220, true);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(800);
 	CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
 	CreateImage("data/image/tama/Tamachestdab106.png", window, renderer, 0, 40, true);
 	CreateImage("data/image/tama/Tamaheaddab.png", window, renderer, 0, -50, true);
-	CreateText("Amusez vous bien avec " + name + "!", window, renderer, white, "font.ttf",  40, 0, -220, true);
+	CreateText("Amusez vous bien avec " + name + "!", window, renderer, white, "data/font/font.ttf", 40, 0, -220, true);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(800);
 	CreateImage("data/image/Beginning.png", window, renderer, 0, 0, true);
 	CreateImage("data/image/tama/Tamachest106.png", window, renderer, 0, 40, true);
 	CreateImage("data/image/tama/Tamaheadj.png", window, renderer, 0, -50, true);
-	CreateText("Amusez vous bien avec " + name + "!", window, renderer, white, "font.ttf",  40, 0, -220, true);
+	CreateText("Amusez vous bien avec " + name + "!", window, renderer, white, "data/font/font.ttf", 40, 0, -220, true);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(2000);
 	Mix_FreeMusic(music);
-
 }
 
 //Crée une texture, et la place sur la fenetre par rapport au centre si centered est true, par rapport au 0 0 si centered est false.
@@ -459,8 +452,22 @@ void GameSdlDestruct(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *
 	SDL_Quit();
 }
 
+Uint32 dropBar(Uint32 interval, void *param)
+{
+	Polytama *tama = (Polytama *)param;
+
+	tama->setHunger(tama->getHunger().getValue() - 1);
+	tama->setJoy(tama->getJoy().getValue() - 1);
+	tama->setThirst(tama->getThirst().getValue() - 1);
+	tama->setHygiene(tama->getHygiene().getValue() - 1);
+
+	return interval;
+}
+
 void GameSdlLoop(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&texture, Polytama &polytama)
 {
+	Mix_AllocateChannels(3);
+	//Lancement de la musique
 	int volume = MIX_MAX_VOLUME / 2;
 	Mix_Music *music = NULL;
 	music = Mix_LoadMUS("data/sound/Polytama.mp3");
@@ -471,8 +478,13 @@ void GameSdlLoop(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&tex
 		SDL_DestroyWindow(window);
 		SDL_Log("Erreur: Chargement de la musique");
 	}
-
 	Mix_PlayMusic(music, -1);
+
+	//Lancement du timer (perte d'un point par jauge toutes les 2 minutes) 120000 ms
+	SDL_TimerID timer;
+	timer = SDL_AddTimer(120000, dropBar, &polytama);
+
+	//lancement de la boucle de jeu
 	GameSdlPrintTama(polytama, window, renderer);
 	bool program_launched = true;
 	InventoryConsommable conso;
@@ -490,316 +502,469 @@ void GameSdlLoop(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&tex
 			switch (event.type)
 			{
 			case SDL_MOUSEBUTTONDOWN:
-				cout << event.button.x << "/" << event.button.y << endl;
-				//dab
-				if (event.button.x > 395 and event.button.x < 415 and event.button.y > 352 and event.button.y < 366)
+				if (!polytama.dead())
 				{
-					//Chest
-					string chest, head;
-					if (polytama.getClothes(1) == nullptr)
+					//dab
+					if (event.button.x > 395 and event.button.x < 415 and event.button.y > 352 and event.button.y < 366)
 					{
-						chest = "data/image/tama/Tamachestdab.png";
-					}
-					else
-					{
-						string id = to_string(polytama.getClothes(1)->getIdItem());
-						chest = "data/image/tama/Tamachestdab" + id + ".png";
-					}
-					CreateImage("data/image/Background.png", window, renderer, 0, 0, true);
-					CreateImage(chest, window, renderer, 0, 40, true);
-					CreateImage("data/image/tama/Tamaheaddab.png", window, renderer, 0, -50, true);
-					//Head (hat)
-					if (polytama.getClothes(0) != nullptr)
-					{
-						string id = to_string(polytama.getClothes(0)->getIdItem());
-						head = "data/image/tama/Tamahead" + id + ".png";
-						CreateImage(head, window, renderer, 0, -50, true);
-					}
-					SDL_RenderPresent(renderer);
-					polytama.dab();
-					SDL_Delay(800);
-					GameSdlPrintTama(polytama, window, renderer);
-				}
-				//bain
-				if (event.button.x > 200 and event.button.x < 250 and event.button.y > 500 and event.button.y < 550)
-				{
-					polytama.takeABath();
-					CreateImage("data/image/Takeabath.png", window, renderer, 0, 0, true);
-					SDL_RenderPresent(renderer);
-					SDL_Delay(4000);
-					SDL_Color blue = {0,0,255};
-					CreateText(polytama.getName() + " est tout propre!",window,renderer,blue, "font.ttf",60,0,250,true);
-					SDL_RenderPresent(renderer);
-					SDL_Delay(2000);	
-					GameSdlPrintTama(polytama, window, renderer);
-				}
-
-				//jeu
-				if (event.button.x > 270 and event.button.x < 320 and event.button.y > 500 and event.button.y < 550)
-				{
-					Mini_Game game;
-					Game_TicTacToe tictactoe;
-					playSDL(tictactoe,window,renderer);
-					GameSdlPrintTama(polytama, window, renderer);
-					
-					if (tictactoe.getTropheeTictactoe() == true)
-					{
-						polytama.addJoy(30);
-						SDL_Color black = {0,0,0};
-						game.generateReward();
-						if(game.getReward() < 100)
+						//Chest
+						string chest, head, accessory;
+						if (polytama.getClothes(1) == nullptr)
 						{
-							Consommable consom=conso.searchIdInInventoryConsommable(game.getReward());
-							conso.addInInventoryConsommable(consom);
-							CreateText("Vous avez gagné",window,renderer,black,"font.ttf",90,0,-20,true);
-							CreateImage("data/image/items/"+to_string(consom.getIdItem())+".png",window,renderer,0,150,true);
-							SDL_RenderPresent(renderer);
-							SDL_Delay(1500);
-
-							conso.saveIndexConsommable("data/indexConsommable.txt");
+							chest = "data/image/tama/Tamachestdab.png";
 						}
 						else
 						{
-							Clothes clot = clo.searchIdInInventoryClothes(game.getReward());
-							clo.addInInventoryClothes(clot);
-							CreateText("Vous avez gagné",window,renderer,black,"font.ttf",90,0,-20,true);
-							CreateImage("data/image/items/"+to_string(clot.getIdItem())+".png",window,renderer,0,100,true);
-							SDL_RenderPresent(renderer);
-							SDL_Delay(1500);
-
-							clo.saveIndexClothes("data/indexClothes.txt");
+							string id = to_string(polytama.getClothes(1)->getIdItem());
+							chest = "data/image/tama/Tamachestdab" + id + ".png";
 						}
-					}
-					else
-					{
-						polytama.addJoy(-30);
-					}
-					
-					GameSdlPrintTama(polytama, window, renderer);
-			}
-
-				//Bouton inventaire consommable pour consommer un item
-				if (event.button.x > 500 and event.button.x < 550 and event.button.y > 500 and event.button.y < 550)
-				{
-					printSdlInventoryConsommable(window, renderer, conso);
-					string word = "yarien";
-					bool inInventory = true;
-					while (inInventory)
-					{
-						SDL_Event event;
-
-						SDL_WaitEvent(&event);
-
-						switch (event.type)
+						CreateImage("data/image/Background.png", window, renderer, 0, 0, true);
+						CreateImage(chest, window, renderer, 0, 40, true);
+						if (polytama.getClothes(2) == nullptr)
 						{
-						case SDL_MOUSEBUTTONDOWN:
-							if (event.button.x > 50 and event.button.x < 150 and event.button.y > 50 and event.button.y < 150)
+							accessory = "data/image/tama/Tamaheaddab.png";
+						}
+						else
+						{
+							string id = to_string(polytama.getClothes(2)->getIdItem());
+							accessory = "data/image/tama/Tamaheaddab" + id + ".png";
+						}
+
+						CreateImage(accessory, window, renderer, 0, -50, true);
+						//Head (hat)
+						if (polytama.getClothes(0) != nullptr)
+						{
+							string id = to_string(polytama.getClothes(0)->getIdItem());
+							head = "data/image/tama/Tamahead" + id + ".png";
+							CreateImage(head, window, renderer, 0, -50, true);
+						}
+						SDL_RenderPresent(renderer);
+						polytama.dab();
+						SDL_Delay(800);
+						GameSdlPrintTama(polytama, window, renderer);
+					}
+					//bain
+					if (event.button.x > 200 and event.button.x < 250 and event.button.y > 500 and event.button.y < 550)
+					{
+						Mix_Chunk *bath;
+						bath = Mix_LoadWAV("data/sound/bath.wav");
+						Mix_VolumeChunk(bath,volume/2);			
+						polytama.takeABath();
+						CreateImage("data/image/Takeabath1.png", window, renderer, 0, 0, true);
+						SDL_RenderPresent(renderer);
+						Mix_PlayChannel(2,bath,0);
+						SDL_Delay(4000);
+						Mix_HaltChannel(2);
+						Mix_FreeChunk(bath);
+						SDL_Color blue = {0, 0, 255};
+						CreateImage("data/image/Takeabath2.png", window, renderer, 0, 0, true);
+						CreateText(polytama.getName() + " est tout propre!", window, renderer, blue, "data/font/font.ttf", 60, 0, 250, true);
+						SDL_RenderPresent(renderer);
+						SDL_Delay(2000);
+						CreateImage("data/image/Takeabath3.png", window, renderer, 0, 0, true);
+						CreateText(polytama.getName() + " est tout propre!", window, renderer, blue, "data/font/font.ttf", 60, 0, 250, true);
+						SDL_RenderPresent(renderer);
+						SDL_Delay(1000);
+						GameSdlPrintTama(polytama, window, renderer);
+					}
+
+					//jeu
+					if (event.button.x > 270 and event.button.x < 320 and event.button.y > 500 and event.button.y < 550)
+					{
+						CreateImage("data/image/MinigameMenu.png", window, renderer, 0, 0, true);
+						CreateImage("data/image/back3.png", window, renderer, 50, 50, false);
+						CreateImage("data/image/Tictactoe.png", window, renderer, 400, 50, false);
+						CreateImage("data/image/Hanged.png", window, renderer, 275, 325, false);
+						CreateImage("data/image/Memory.png", window, renderer, 525, 325, false);
+						SDL_RenderPresent(renderer);
+						Mini_Game game;
+						bool inMg = true;
+						bool quit = false;
+						bool trophee = false;
+
+						while (inMg)
+						{
+							SDL_Event event;
+
+							SDL_WaitEvent(&event);
+
+							switch (event.type)
 							{
-								inInventory = false;
-							}
-							else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 30 and event.button.y < 190)
-							{
-								if (conso.getConsommableBoard()[0].getNumberItem() != 0)
+							case SDL_MOUSEBUTTONDOWN:
+								if (event.button.x > 50 and event.button.x < 150 and event.button.y > 50 and event.button.y < 150)
 								{
-									word = conso.getConsommableBoard()[0].getNameItem();
+									inMg = false;
+									quit = true;
+								}
+								else if (event.button.x > 400 and event.button.x < 600 and event.button.y > 50 and event.button.y < 250)
+								{
+									Game_TicTacToe ttt;
+									playSDL(ttt, window, renderer);
+									trophee = ttt.getTropheeTictactoe();
+									inMg = false;
+								}
+								else if (event.button.x > 275 and event.button.x < 475 and event.button.y > 325 and event.button.y < 525)
+								{
+									Game_Hanged hg;
+									playHangedSDL(hg, window, renderer);
+									trophee = hg.getTropheeHanged();
+									inMg = false;
+								}
+								else if (event.button.x > 525 and event.button.x < 725 and event.button.y > 325 and event.button.y < 525)
+								{
+									Game_Memory memo;
+									playMemorySDL(memo, window, renderer);
+									trophee = memo.getTropheeMemory();
+									inMg = false;
+								}
+
+								break;
+							}
+						}
+
+						GameSdlPrintTama(polytama, window, renderer);
+
+						if (trophee == true)
+						{
+							polytama.addJoy(30);
+							SDL_Color black = {0, 0, 0};
+							game.generateReward();
+							unsigned int reward = game.getReward();
+
+							if (alreadyGot(reward, polytama, clo))
+							{
+								reward = 9;
+							}
+
+							if (reward < 100)
+							{
+								Consommable consom = conso.searchIdInInventoryConsommable(reward);
+								conso.addInInventoryConsommable(consom);
+								CreateText("Vous avez gagné", window, renderer, black, "data/font/font.ttf", 90, 0, -20, true);
+								CreateImage("data/image/items/" + to_string(consom.getIdItem()) + ".png", window, renderer, 0, 150, true);
+								SDL_RenderPresent(renderer);
+								SDL_Delay(1500);
+
+								conso.saveIndexConsommable("data/indexConsommable.txt");
+							}
+							else
+							{
+								Clothes clot = clo.searchIdInInventoryClothes(reward);
+								clo.addInInventoryClothes(clot);
+								CreateText("Vous avez gagné", window, renderer, black, "data/font/font.ttf", 90, 0, -20, true);
+								CreateImage("data/image/items/" + to_string(clot.getIdItem()) + ".png", window, renderer, 0, 100, true);
+								SDL_RenderPresent(renderer);
+								SDL_Delay(1500);
+
+								clo.saveIndexClothes("data/indexClothes.txt");
+							}
+						}
+						else
+						{
+							if (!quit)
+							{
+								polytama.addJoy(-30);
+							}
+						}
+
+						GameSdlPrintTama(polytama, window, renderer);
+					}
+					//Bouton inventaire consommable pour consommer un item
+					if (event.button.x > 500 and event.button.x < 550 and event.button.y > 500 and event.button.y < 550)
+					{
+						printSdlInventoryConsommable(window, renderer, conso);
+						string word = "yarien";
+						bool inInventory = true;
+						while (inInventory)
+						{
+							SDL_Event event;
+
+							SDL_WaitEvent(&event);
+
+							switch (event.type)
+							{
+							case SDL_MOUSEBUTTONDOWN:
+								if (event.button.x > 50 and event.button.x < 150 and event.button.y > 50 and event.button.y < 150)
+								{
 									inInventory = false;
 								}
-							}
-							else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 30 and event.button.y < 190)
-							{
-								if (conso.getConsommableBoard()[1].getNumberItem() != 0)
+								else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 30 and event.button.y < 190)
 								{
-									word = conso.getConsommableBoard()[1].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[0].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[0].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 30 and event.button.y < 190)
-							{
-								if (conso.getConsommableBoard()[2].getNumberItem() != 0)
+								else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 30 and event.button.y < 190)
 								{
-									word = conso.getConsommableBoard()[2].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[1].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[1].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 220 and event.button.y < 380)
-							{
-								if (conso.getConsommableBoard()[3].getNumberItem() != 0)
+								else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 30 and event.button.y < 190)
 								{
-									word = conso.getConsommableBoard()[3].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[2].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[2].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 220 and event.button.y < 380)
-							{
-								if (conso.getConsommableBoard()[4].getNumberItem() != 0)
+								else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 220 and event.button.y < 380)
 								{
-									word = conso.getConsommableBoard()[4].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[3].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[3].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 220 and event.button.y < 380)
-							{
-								if (conso.getConsommableBoard()[5].getNumberItem() != 0)
+								else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 220 and event.button.y < 380)
 								{
-									word = conso.getConsommableBoard()[5].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[4].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[4].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 410 and event.button.y < 570)
-							{
-								if (conso.getConsommableBoard()[6].getNumberItem() != 0)
+								else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 220 and event.button.y < 380)
 								{
-									word = conso.getConsommableBoard()[6].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[5].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[5].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 410 and event.button.y < 570)
-							{
-								if (conso.getConsommableBoard()[7].getNumberItem() != 0)
+								else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 410 and event.button.y < 570)
 								{
-									word = conso.getConsommableBoard()[7].getNameItem();
-									inInventory = false;
+									if (conso.getConsommableBoard()[6].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[6].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 410 and event.button.y < 570)
-							{
-								/*
+								else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 410 and event.button.y < 570)
+								{
+									if (conso.getConsommableBoard()[7].getNumberItem() != 0)
+									{
+										word = conso.getConsommableBoard()[7].getNameItem();
+										inInventory = false;
+									}
+								}
+								else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 410 and event.button.y < 570)
+								{
+
 									if (conso.getConsommableBoard()[8].getNumberItem() != 0)
 									{
 										word = conso.getConsommableBoard()[8].getNameItem();
 										inInventory = false;
-									}	
-									*/
+									}
+								}
+								break;
 							}
-							break;
 						}
-					}
 
-					if (word != "yarien")
-					{
-						Consommable toConsume;
-						toConsume = conso.searchInInventoryConsommable(word);
-						conso.deleteFromInventoryConsommable(toConsume.getIdItem());
-						polytama.consume(toConsume);
-						conso.saveIndexConsommable("data/indexConsommable.txt");
-					}
-					GameSdlPrintTama(polytama, window, renderer);
-				}
-
-				//Bouton inventaire clothes pour changer de vêtement
-				if (event.button.x > 570 and event.button.x < 620 and event.button.y > 500 and event.button.y < 550)
-				{
-					printSdlInventoryClothes(window, renderer, clo);
-					string word = "yarien";
-					bool inInventory = true;
-					while (inInventory)
-					{
-						SDL_Event event;
-
-						SDL_WaitEvent(&event);
-
-						switch (event.type)
+						if (word != "yarien")
 						{
-						case SDL_MOUSEBUTTONDOWN:
-							if (event.button.x > 50 and event.button.x < 150 and event.button.y > 50 and event.button.y < 150)
+							Consommable toConsume;
+							toConsume = conso.searchInInventoryConsommable(word);
+							conso.deleteFromInventoryConsommable(toConsume.getIdItem());
+							polytama.consume(toConsume);
+							conso.saveIndexConsommable("data/indexConsommable.txt");
+						}
+						GameSdlPrintTama(polytama, window, renderer);
+					}
+
+					//Bouton inventaire clothes pour changer de vêtement
+					if (event.button.x > 570 and event.button.x < 620 and event.button.y > 500 and event.button.y < 550)
+					{
+						printSdlInventoryClothes(window, renderer, clo, polytama);
+						string word = "yarien";
+						IdBody body;
+						bool remove = false;
+						bool inInventory = true;
+						while (inInventory)
+						{
+							SDL_Event event;
+
+							SDL_WaitEvent(&event);
+
+							switch (event.type)
 							{
-								inInventory = false;
-							}
-							else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 30 and event.button.y < 190)
-							{
-								if (clo.getClothesBoard()[0].getNumberItem() != 0)
+							case SDL_MOUSEBUTTONDOWN:
+
+								if (event.button.x > 50 and event.button.x < 150 and event.button.y > 50 and event.button.y < 150)
 								{
-									word = clo.getClothesBoard()[0].getNameItem();
-									cout << "sweat" << endl;
 									inInventory = false;
 								}
-							}
-							else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 30 and event.button.y < 190)
-							{
-								if (clo.getClothesBoard()[1].getNumberItem() != 0)
+								else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 30 and event.button.y < 190)
 								{
-									word = clo.getClothesBoard()[1].getNameItem();
-									cout << "sombrero" << endl;
-									inInventory = false;
+									if (clo.getClothesBoard()[0].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[0].getNameItem();
+
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 30 and event.button.y < 190)
-							{
-								if (clo.getClothesBoard()[2].getNumberItem() != 0)
+								else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 30 and event.button.y < 190)
 								{
-									//word = clo.getClothesBoard()[2].getNameItem();
-									inInventory = false;
+									if (clo.getClothesBoard()[1].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[1].getNameItem();
+
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 220 and event.button.y < 380)
-							{
-								if (clo.getClothesBoard()[3].getNumberItem() != 0)
+								else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 30 and event.button.y < 190)
 								{
-									//word = clo.getClothesBoard()[3].getNameItem();
-									inInventory = false;
+									if (clo.getClothesBoard()[2].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[2].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 220 and event.button.y < 380)
-							{
-								if (clo.getClothesBoard()[4].getNumberItem() != 0)
+								else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 220 and event.button.y < 380)
 								{
-									//word = clo.getClothesBoard()[4].getNameItem();
-									inInventory = false;
+									if (clo.getClothesBoard()[3].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[3].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 220 and event.button.y < 380)
-							{
-								if (clo.getClothesBoard()[5].getNumberItem() != 0)
+								else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 220 and event.button.y < 380)
 								{
-									//word = clo.getClothesBoard()[5].getNameItem();
-									inInventory = false;
+									if (clo.getClothesBoard()[4].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[4].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 410 and event.button.y < 570)
-							{
-								if (clo.getClothesBoard()[6].getNumberItem() != 0)
+								else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 220 and event.button.y < 380)
 								{
-									word = clo.getClothesBoard()[6].getNameItem();
-									cout << "t-shirt polytech" << endl;
-									inInventory = false;
+									if (clo.getClothesBoard()[5].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[5].getNameItem();
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 410 and event.button.y < 570)
-							{
-								if (clo.getClothesBoard()[7].getNumberItem() != 0)
+								else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 410 and event.button.y < 570)
 								{
-									//word = clo.getClothesBoard()[7].getNameItem();
-									inInventory = false;
+									if (clo.getClothesBoard()[6].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[6].getNameItem();
+
+										inInventory = false;
+									}
 								}
-							}
-							else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 410 and event.button.y < 570)
-							{
-								/*
-									if (conso.getConsommableBoard()[8].getNumberItem() != 0)
+								else if (event.button.x > 420 and event.button.x < 580 and event.button.y > 410 and event.button.y < 570)
+								{
+									if (clo.getClothesBoard()[7].getNumberItem() != 0)
+									{
+										word = clo.getClothesBoard()[7].getNameItem();
+										inInventory = false;
+									}
+								}
+								else if (event.button.x > 610 and event.button.x < 770 and event.button.y > 410 and event.button.y < 570)
+								{
+									if (clo.getClothesBoard()[8].getNumberItem() != 0)
 									{
 										word = clo.getClothesBoard()[8].getNameItem();
 										inInventory = false;
-									}	
-									*/
+									}
+								}
+								else if (event.button.x > 38 and event.button.x < 166 and event.button.y > 202 and event.button.y < 277)
+								{
+									if (polytama.getClothes(0) != nullptr)
+									{
+										remove = true;
+										body = HEAD;
+										inInventory = false;
+									}
+								}
+								else if (event.button.x > 38 and event.button.x < 166 and event.button.y > 438 and event.button.y < 544)
+								{
+									if (polytama.getClothes(1) != nullptr)
+									{
+										remove = true;
+										body = CHEST;
+										inInventory = false;
+									}
+								}
+								else if (event.button.x > 38 and event.button.x < 166 and event.button.y > 311 and event.button.y < 385)
+								{
+									remove = true;
+									body = ACCESSORY;
+									inInventory = false;
+								}
+
+								break;
 							}
-							break;
 						}
+
+						if (word != "yarien" or remove == true)
+						{
+							if (remove)
+							{
+								Clothes toRemove;
+								toRemove = *(polytama.getClothes(body));
+								clo.addInInventoryClothes(toRemove);
+								polytama.removeClothes(body);
+								clo.saveIndexClothes("data/indexClothes.txt");
+							}
+							else
+							{
+								Clothes toWear;
+								toWear = clo.searchInInventoryClothes(word);
+								if (polytama.getClothes(toWear.getSlotClothes()) != nullptr)
+								{
+									Clothes clot2 = *polytama.getClothes(toWear.getSlotClothes());
+									clo.addInInventoryClothes(clot2);
+								}
+								polytama.wearClothes(toWear);
+								clo.deleteFromInventoryClothes(toWear.getIdItem());
+								clo.saveIndexClothes("data/indexClothes.txt");
+							}
+						}
+						GameSdlPrintTama(polytama, window, renderer);
+					}
+					//crédit
+					if (event.button.x > 267 and event.button.x < 522 and event.button.y > 68 and event.button.y < 177)
+					{
+						CreateImage("data/image/Crédits.png",window,renderer,0,0,true);
+						SDL_RenderPresent(renderer);
+						SDL_Delay(6000);
+						CreateImage("data/image/Thanks.png",window,renderer,0,0,true);
+						SDL_RenderPresent(renderer);
+						SDL_Delay(6000);
+						GameSdlPrintTama(polytama, window, renderer);
+					}
+					//prise
+					if (event.button.x > 98 and event.button.x < 104 and event.button.y > 273 and event.button.y < 275)
+					{
+						Mix_Chunk *elec;
+						elec = Mix_LoadWAV("data/sound/elec.wav");
+						Mix_VolumeChunk(elec,volume);
+						CreateImage("data/image/tama/Thunder.png",window,renderer,0,0,true);
+						SDL_RenderPresent(renderer);
+						Mix_PlayChannel(2,elec,0);
+						SDL_Delay(6000);
+						Mix_HaltChannel(2);
+						Mix_FreeChunk(elec);
+						polytama.electrocute();
+						GameSdlPrintTama(polytama, window, renderer);
 					}
 
-					if (word != "yarien")
+				}
+				else
+				{
+					if (event.button.x > 301 and event.button.x < 569 and event.button.y > 101 and event.button.y < 420)
 					{
-						Clothes toWear;
-						toWear = clo.searchInInventoryClothes(word);
-						if (polytama.getClothes(toWear.getSlotClothes()) != nullptr)
-						{
-							Clothes clot2 = *polytama.getClothes(toWear.getSlotClothes());
-							clo.addInInventoryClothes(clot2);
-						}
-						polytama.wearClothes(toWear);
-						clo.deleteFromInventoryClothes(toWear.getIdItem());
-						clo.saveIndexClothes("data/indexClothes.txt");
+						polytama.revive();
+						SdlReviveAnimation(polytama.getName(), window, renderer);
+						Mix_PlayMusic(music, -1);
+						GameSdlPrintTama(polytama, window, renderer);
 					}
-					GameSdlPrintTama(polytama, window, renderer);
 				}
 
 				//Bouton menu musique
@@ -867,24 +1032,6 @@ void GameSdlLoop(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&tex
 				}
 				break;
 
-			case SDL_MOUSEMOTION:
-				//cout << event.motion.x << "/" << event.motion.y << endl;
-				/*
-				{
-					SDL_Color black = {0, 0, 0};
-					if (event.motion.x > 720 and event.motion.x < 770 and event.motion.y > 10 and event.motion.y < 60)
-					{
-
-
-						CreateText("Quitter",window,renderer,black,"font.ttf",20,650,20,false);
-						SDL_RenderPresent(renderer);
-					
-					}
-					
-				}
-				*/
-				break;
-
 			case SDL_QUIT:
 				program_launched = false;
 				break;
@@ -894,6 +1041,7 @@ void GameSdlLoop(SDL_Window *&window, SDL_Renderer *&renderer, SDL_Texture *&tex
 			}
 		}
 	}
+	SDL_RemoveTimer(timer);
 	Mix_FreeMusic(music);
 	polytama.save("save.txt");
 }
@@ -958,23 +1106,22 @@ void printSdlInventoryConsommable(SDL_Window *&window, SDL_Renderer *&renderer, 
 			}
 			SDL_Color black = {0, 0, 0};
 			CreateImage(image, window, renderer, posx, posy, false);
-			CreateText(quantity, window, renderer, black, "font.ttf", 25, posx + 120, posy, false);
+			CreateText(quantity, window, renderer, black, "data/font/font.ttf", 25, posx + 120, posy, false);
 		}
 	}
 	SDL_RenderPresent(renderer);
 }
 
-void printSdlInventoryClothes(SDL_Window *&window, SDL_Renderer *&renderer, const InventoryClothes &clo)
+void printSdlInventoryClothes(SDL_Window *&window, SDL_Renderer *&renderer, const InventoryClothes &clo, const Polytama &polytama)
 {
 	CreateImage("data/image/inventoryclothes.png", window, renderer, 0, 0, true);
 	CreateImage("data/image/back2.png", window, renderer, 50, 50, false);
-
+	string head, chest, accessory;
 	for (unsigned int i = 0; i < clo.calculNumberClothes(); i++)
 	{
 		vector<Clothes> tab = clo.getClothesBoard();
 		if (tab[i].getNumberItem() != 0)
 		{
-			cout << tab[i].getIdItem() << endl;
 			string id = to_string(tab[i].getIdItem());
 			string image = "data/image/items/" + id + ".png";
 			int posx, posy;
@@ -1026,6 +1173,24 @@ void printSdlInventoryClothes(SDL_Window *&window, SDL_Renderer *&renderer, cons
 			CreateImage(image, window, renderer, posx, posy, false);
 		}
 	}
+	if (polytama.getClothes(0) != nullptr)
+	{
+		head = "data/image/items/" + to_string((polytama.getClothes(0))->getIdItem()) + ".png";
+		CreateImage(head, window, renderer, -300, -50, true);
+	}
+
+	if (polytama.getClothes(1) != nullptr)
+	{
+		chest = "data/image/items/" + to_string((polytama.getClothes(1))->getIdItem()) + ".png";
+		CreateImage(chest, window, renderer, -300, 190, true);
+	}
+
+	if (polytama.getClothes(2) != nullptr)
+	{
+		accessory = "data/image/items/" + to_string((polytama.getClothes(2))->getIdItem()) + ".png";
+		CreateImage(accessory, window, renderer, -300, 50, true);
+	}
+
 	SDL_RenderPresent(renderer);
 }
 
@@ -1033,62 +1198,215 @@ void GameSdlPrintTama(const Polytama &polytama, SDL_Window *&window, SDL_Rendere
 {
 	//print terrain
 	CreateImage("data/image/Background.png", window, renderer, 0, 0, true);
-
-	CreateImage("data/image/Consoinventory.png", window, renderer, 500, 500, false);
-	CreateImage("data/image/iconclothes.png", window, renderer, 570, 500, false);
-	CreateImage("data/image/Bath.png", window, renderer, 200, 500, false);
-	CreateImage("data/image/minigame.png", window, renderer, 270, 500, false);
+	if (!polytama.dead())
+	{
+		CreateImage("data/image/Consoinventory.png", window, renderer, 500, 500, false);
+		CreateImage("data/image/Clothinventory.png", window, renderer, 570, 500, false);
+		CreateImage("data/image/Bath.png", window, renderer, 200, 500, false);
+		CreateImage("data/image/Minigame.png", window, renderer, 270, 500, false);
+	}
 	CreateImage("data/image/quit.png", window, renderer, 720, 10, false);
 	CreateImage("data/image/music.png", window, renderer, 720, 70, false);
-
 	//print bars
 	SDL_Color blue = {0, 0, 255};
-	CreateText(polytama.getName(), window, renderer, blue, "font.ttf", 60, 0, -265, true);
+	CreateText(polytama.getName(), window, renderer, blue, "data/font/font.ttf", 60, 0, -265, true);
 	//Joie
 	CreateImage("data/image/Joy.png", window, renderer, 0, 0, false);
-	CreateText(to_string((polytama.getJoy()).getValue()), window, renderer, blue, "font.ttf", 40, 60, 0, false);
+	CreateText(to_string((polytama.getJoy()).getValue()), window, renderer, blue, "data/font/font.ttf", 40, 60, 0, false);
 	//Faim
 	CreateImage("data/image/Hunger.png", window, renderer, 0, 60, false);
-	CreateText(to_string((polytama.getHunger()).getValue()), window, renderer, blue, "font.ttf", 40, 60, 60, false);
+	CreateText(to_string((polytama.getHunger()).getValue()), window, renderer, blue, "data/font/font.ttf", 40, 60, 60, false);
 	//Soif
 	CreateImage("data/image/Thirst.png", window, renderer, 0, 120, false);
-	CreateText(to_string((polytama.getThirst()).getValue()), window, renderer, blue, "font.ttf", 40, 60, 120, false);
+	CreateText(to_string((polytama.getThirst()).getValue()), window, renderer, blue, "data/font/font.ttf", 40, 60, 120, false);
 	//Hygiène
 	CreateImage("data/image/Hygiene.png", window, renderer, 0, 180, false);
-	CreateText(to_string((polytama.getHygiene()).getValue()), window, renderer, blue, "font.ttf", 40, 60, 180, false);
+	CreateText(to_string((polytama.getHygiene()).getValue()), window, renderer, blue, "data/font/font.ttf", 40, 60, 180, false);
 
-	//print des vêtements
-	string head, chest, accessory;
-	//Chest
-	if (polytama.getClothes(1) == nullptr)
+	if (!polytama.dead())
 	{
-		chest = "data/image/tama/Tamachest.png";
+		//print des vêtements
+		string head, chest, accessory;
+		//Chest
+		if (polytama.getClothes(1) == nullptr)
+		{
+			chest = "data/image/tama/Tamachest.png";
+		}
+		else
+		{
+			string id = to_string(polytama.getClothes(1)->getIdItem());
+			chest = "data/image/tama/Tamachest" + id + ".png";
+		}
+		//Accessory
+		string mood = polytama.getMood();
+		if (polytama.getClothes(2) == nullptr)
+		{
+			accessory = "data/image/tama/Tamahead" + mood + ".png";
+		}
+		else
+		{
+			string id = to_string(polytama.getClothes(2)->getIdItem());
+			accessory = "data/image/tama/Tamahead" + mood + id + ".png";
+		}
+		CreateImage(chest, window, renderer, 0, 40, true);
+		CreateImage(accessory, window, renderer, 0, -50, true);
+		//Head (hat)
+		if (polytama.getClothes(0) != nullptr)
+		{
+			string id = to_string(polytama.getClothes(0)->getIdItem());
+			head = "data/image/tama/Tamahead" + id + ".png";
+			CreateImage(head, window, renderer, 0, -50, true);
+		}
+
+		//Propreté
+		if (polytama.getHygiene().getValue() < 30)
+		{
+			CreateImage("data/image/tama/Tupu.png", window, renderer, 0, 50, true);
+		}
+		else if (polytama.getHygiene().getValue() > 90)
+		{
+			CreateImage("data/image/tama/Clean.png", window, renderer, 0, 0, true);
+		}
 	}
 	else
 	{
-		string id = to_string(polytama.getClothes(1)->getIdItem());
-		chest = "data/image/tama/Tamachest" + id + ".png";
-	}
-	//Accessory
-	string mood = polytama.getMood();
-	if (polytama.getClothes(2) == nullptr)
-	{
-		accessory = "data/image/tama/Tamahead" + mood + ".png";
-	}
-	else
-	{
-		string id = to_string(polytama.getClothes(2)->getIdItem());
-		accessory = "data/image/tama/Tamahead" + mood + id + ".png";
-	}
-	CreateImage(chest, window, renderer, 0, 40, true);
-	CreateImage(accessory, window, renderer, 0, -50, true);
-	//Head (hat)
-	if (polytama.getClothes(0) != nullptr)
-	{
-		string id = to_string(polytama.getClothes(0)->getIdItem());
-		head = "data/image/tama/Tamahead" + id + ".png";
-		CreateImage(head, window, renderer, 0, -50, true);
+		SDL_Color black = {0, 0, 0};
+		CreateImage("data/image/BackgroundRIP.png", window, renderer, 0, 0, true);
+		CreateText("Oh non..." + polytama.getName() + " est mort...", window, renderer, black, "data/font/font.ttf", 40, 0, -250, true);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(2000);
+		CreateImage("data/image/BackgroundRIP.png", window, renderer, 0, 0, true);
+		CreateText("Il faut plus prendre soin de ton Polytama!", window, renderer, black, "data/font/font.ttf", 40, 0, -250, true);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(2000);
+		CreateImage("data/image/BackgroundRIP.png", window, renderer, 0, 0, true);
+		CreateText("Heureusement que ces petites créatures sont resistantes.", window, renderer, black, "data/font/font.ttf", 30, 0, -250, true);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(2000);
+		CreateImage("data/image/BackgroundRIP.png", window, renderer, 0, 0, true);
+		CreateText("Clic sur le fantôme de " + polytama.getName() + " pour le faire revenir à la vie.", window, renderer, black, "data/font/font.ttf", 30, 0, -250, true);
 	}
 
 	SDL_RenderPresent(renderer);
+}
+
+//Fonction pour éviter de pouvoir gagner un vêtement déjà acquis
+bool alreadyGot(const unsigned int &reward, const Polytama &polytama, const InventoryClothes &clo)
+{
+	//Si l'objet est un consommable on renvoie faux
+	if (reward < 100)
+	{
+		return false;
+	}
+
+	//Si l'objet est porté par le tama on renvoie vrai
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		if (polytama.getClothes(i) != nullptr)
+		{
+			if (polytama.getClothes(i)->getIdItem() == reward)
+			{
+
+				return true;
+			}
+		}
+	}
+
+	//Si l'objet est dans l'inventaire on renvoie vrai
+
+	if (clo.searchIdInInventoryClothes(reward).getNumberItem() == 1)
+	{
+
+		return true;
+	}
+
+	//Si l'objet n'est pas un consommable, n'est pas porté par le tama et n'est pas dans l'inventaire on renvoie faux
+	return false;
+}
+
+void SdlReviveAnimation(const string &name, SDL_Window *&window, SDL_Renderer *&renderer)
+{
+	Mix_AllocateChannels(4);
+	Mix_Chunk *storm;
+	Mix_Chunk *thunder;
+	Mix_Chunk *elec;
+	storm = Mix_LoadWAV("data/sound/rain.wav");
+	thunder = Mix_LoadWAV("data/sound/thunder.wav");
+	elec = Mix_LoadWAV("data/sound/elec.wav");
+
+	Mix_VolumeChunk(thunder, MIX_MAX_VOLUME / 2);
+	Mix_VolumeChunk(elec, MIX_MAX_VOLUME / 2);
+
+	Mix_Music *revive = NULL;
+	revive = Mix_LoadMUS("data/sound/Revive.mp3");
+	Mix_VolumeMusic(28);
+
+	if (revive == NULL)
+	{
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(window);
+		SDL_Log("Erreur: Chargement de la musique");
+	}
+	Mix_PlayMusic(revive, -1);
+	Mix_PlayChannel(1, storm, 0);
+
+	CreateImage("data/image/ReviveBackground1.png", window, renderer, 0, 0, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(3000);
+
+	Mix_PlayChannel(2, thunder, 0);
+	CreateImage("data/image/ReviveBackground2.png", window, renderer, 0, 0, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(2000);
+
+	Mix_VolumeChunk(storm, MIX_MAX_VOLUME / 2);
+	CreateImage("data/image/ReviveBackground3.png", window, renderer, 0, 0, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(2500);
+
+	CreateImage("data/image/ReviveBackground4.png", window, renderer, 0, 0, true);
+	SDL_Color white = {255,255,255};
+	CreateText("Clic sur " + name + " pour commencer la résurrection.", window, renderer, white, "data/font/font.ttf", 30, 0, 280, true);
+	SDL_RenderPresent(renderer);
+
+	bool notres = true;
+
+	while (notres)
+	{
+		SDL_Event event;
+		SDL_WaitEvent(&event);
+
+		switch (event.type)
+		{
+		case SDL_MOUSEBUTTONDOWN:
+			notres = false;
+		}
+	}
+
+	Mix_PlayChannel(2, elec, 0);
+	Mix_PlayChannel(3, thunder, 0);
+	CreateImage("data/image/ReviveBackground5.png", window, renderer, 0, 0, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(6000);
+	Mix_HaltChannel(2);
+
+	CreateImage("data/image/ReviveBackground6.png", window, renderer, 0, 0, true);
+	CreateText(name + " est de retour !", window, renderer, white, "data/font/font.ttf", 40, 0, 280, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(2000);
+
+	CreateImage("data/image/ReviveBackground7.png", window, renderer, 0, 0, true);
+	CreateText(name + " est de retour !", window, renderer, white, "data/font/font.ttf", 40, 0, 280, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(800);
+
+	CreateImage("data/image/ReviveBackground6.png", window, renderer, 0, 0, true);
+	CreateText("Malheureusement ses affaires n'ont pas resisté à l'experience...", window, renderer, white, "data/font/font.ttf", 20, 0, 280, true);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(3000);
+
+	Mix_FreeChunk(thunder);
+	Mix_FreeChunk(storm);
+	Mix_FreeChunk(elec);
+	Mix_FreeMusic(revive);
 }

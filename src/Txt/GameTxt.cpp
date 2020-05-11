@@ -239,7 +239,6 @@ void GameTxtPrintTama(const Polytama & polytama){
 					printw("Vous avez gagn� ");
 					printw (conso.getNameItem().c_str());
 					printw(" !\n");
-					manger.saveIndexConsommable("data/indexConsommable.txt");
 				}
 				else
 				{
@@ -248,7 +247,6 @@ void GameTxtPrintTama(const Polytama & polytama){
 					printw("Vous avez gagn� ");
 					printw (clot.getNameItem().c_str());
 					printw(" !\n");
-					sweatshirt.saveIndexClothes("data/indexClothes.txt");
 				}
 			}
 			if(getch()!=410){
@@ -292,7 +290,6 @@ void GameTxtPrintTama(const Polytama & polytama){
 			if(mot != "rien"){
 			manger.deleteFromInventoryConsommable(conso.getIdItem());
 			polytama.consume(conso);
-			manger.saveIndexConsommable("data/indexConsommable.txt");
 			clear();
 			refresh();
 			noecho();
@@ -341,7 +338,6 @@ void GameTxtPrintTama(const Polytama & polytama){
 			}
 			polytama.wearClothes(clot1);
 			sweatshirt.deleteFromInventoryClothes(clot1.getIdItem());
-			sweatshirt.saveIndexClothes("data/indexClothes.txt");
 			}
 			refresh();
 			clear();
@@ -351,7 +347,6 @@ void GameTxtPrintTama(const Polytama & polytama){
 			clear();
 			if(manger.NumberConsommable()!=0){
 			printTxtInventoryConsommable(manger);
-			manger.saveIndexConsommable("data/indexConsommable.txt");
 			}else{
 				printw("Voici vos consommables restants\n");
 				printw("Il n'y a rien !\n");
@@ -361,7 +356,6 @@ void GameTxtPrintTama(const Polytama & polytama){
 			printw("\n");
 			if(sweatshirt.NumberClothes()!=0){
 			printTxtInventoryClothes(sweatshirt);
-			sweatshirt.saveIndexClothes("data/indexClothes.txt");
 			}else{
 				printw("Voici vos vetements et accessoires restants\n");
 				printw("Il n'y a rien !\n");
@@ -409,5 +403,4 @@ void GameTxtPrintTama(const Polytama & polytama){
 	}
 
     }
-	polytama.save("save.txt");
 }

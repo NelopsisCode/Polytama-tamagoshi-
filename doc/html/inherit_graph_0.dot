@@ -1,7 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node0 [label="Bar",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classBar.html",tooltip="Un Bar est une jauge, ici principalement de vie, de faim, de soif, d&#39;hygiene et de joie..."];
-}

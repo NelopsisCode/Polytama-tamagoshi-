@@ -43,9 +43,6 @@ void Mini_Game::selectAndPlayMiniGame()
 		case 2 : { 
 			cout<<"impossible pour l'instant"<<endl;
 
-			//Game_Snake sn;
-			//sn.play();
-
 		}break;
 		case 3 : {
 			cout<<"impossible pour l'instant"<<endl;
@@ -72,14 +69,13 @@ void Mini_Game::generateReward()
 		int min = 1; 
 		int max = 100;
 		int plage = max - min + 1;
-		srand((unsigned int)time(NULL));
 		a = (rand() % plage) + min;
 
 		if(a > 80)
 		{
 			//tirage d'un Clothes
 			min = 100; 
-			max = 109; //100+nb de vêtements
+			max = 108; //100+nb de vêtements
 			plage = max - min + 1;
 			id = (rand() % plage) + min;
 		}
@@ -87,7 +83,7 @@ void Mini_Game::generateReward()
 		{
 			//tirage d'un consommable
 			min = 1; 
-			max = 10; //1+nb de consommable 
+			max = 9; //1+nb de consommable 
 			plage = max - min + 1;
 			id = (rand() % plage) + min;
 			

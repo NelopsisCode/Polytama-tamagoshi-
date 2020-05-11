@@ -7,20 +7,36 @@
 #include <time.h>
 #include <stdlib.h> 
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
-#include <SDL2/SDL_mixer.h> //son
-#include <SDL2/SDL_ttf.h> //police
+#include <SDL_mixer.h> //son
+#include <SDL_ttf.h> //police
 
-const unsigned int WIDTH = 10;
-const unsigned int LENGTH = 10;
-
+/**
+ * @interface <TictactoeSDL>
+ * @brief TictactoeSDL est l'adapation graphique de la classe Game_TicTacToe
+ */
+/**
+ * @brief Boucle de jeu sous SDL
+ * @param tictactoe Jeu de morpion
+ * @param window Fenetre d'affichage
+ * @param renderer Moteur de rendu
+ */
 void playSDL(Game_TicTacToe & tictactoe,SDL_Window *&window, SDL_Renderer *&renderer);
 
+/**
+ * @brief Affichage du morpion sous SDL
+ * @param tictactoe Jeu de morpion
+ * @param window Fenetre d'affichage
+ * @param renderer Moteur de rendu
+ */
+void printSDLBoardTictactoe(const Game_TicTacToe & tictactoe,SDL_Window *&window, SDL_Renderer *&renderer);
 
-void printSDLBoardTictactoe(Game_TicTacToe tictactoe,SDL_Window *&window, SDL_Renderer *&renderer);
-
+/**
+ * @brief Calcul de la difficulte du jeu
+ * @return True si le jeu est facile
+ */
 bool stupidAI();
 
 #endif

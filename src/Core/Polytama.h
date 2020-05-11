@@ -18,7 +18,7 @@
 
 using namespace std;
 
-const unsigned int DROPRATE = 1 ; //(chaque bar perd 1 toutes les DROPRATE min)
+const unsigned int DROPRATE = 10 ; //(chaque bar perd 1 toutes les DROPRATE min)
 
 
 /**
@@ -60,7 +60,7 @@ Construit un Polytama avec le nom souhaité. Il est nu mais en bonne santé!
 	
 	~Polytama();
 
-//Accesseur
+//Accesseur190
 
 /**
 @brief Accesseur nom
@@ -187,14 +187,18 @@ Elle applique ensuite les effets du temps passé au Polytama.
 @param [in] time correspond à une durée. Plus précisement il s'agit de la durée (en sec) entre le 1er janvier 1970 et la dernière fermeture du programme.
 */
 	void pastTime(const long int & time);
+
+	bool dead()const;
+
+	void revive();
+
+	void electrocute();
 /**
 @brief Test de regression de la classe Polytama.
 
 Test toutes les fonctions de la classe et renvoie une erreur si une des fonctions ne fonctionne pas correctement.
 */
 	void polytamaTestRegression();
-
-	void polytamaTest();
 
 private:
 

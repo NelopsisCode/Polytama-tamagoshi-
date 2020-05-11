@@ -1,74 +1,84 @@
-OBJ= obj/Polytama.o obj/Bar.o obj/InventoryClothes.o obj/InventoryConsommable.o obj/Clothes.o obj/Consommable.o obj/Item.o obj/MiniGame.o obj/Tictactoe.o
+CORE = Core/Polytama.cpp Core/Bar.cpp Core/InventoryClothes.cpp Core/InventoryConsommable.cpp Core/Item.cpp Core/Clothes.cpp Core/Consommable.cpp Core/Mini_Game.cpp Core/Tictactoe.cpp Core/Hanged.cpp Core/Memory.cpp
 
-FLAGS= -g -Wall 
-CC = g++
+SRCS_TXT = $(CORE) Txt/TictactoeTxt.cpp Txt/GameTxt.cpp Txt/MainTxt.cpp
+FINAL_TARGET_TXT = polytama_txt
+#DEFINE_TXT = -DJEU_TXT
 
-SDL= -lSDL2 -lSDL2_ttf -lSDL2_mixer -lSDL2_image 
+SRCS_SDL = $(CORE) Sdl/GameSDL.cpp Sdl/MemorySDL.cpp Sdl/HangedSDL.cpp Sdl/TictactoeSDL.cpp Sdl/mainSDL.cpp 
+FINAL_TARGET_SDL = polytama_sdl
+#DEFINE_SDL = -DJEU_SDL
 
-all: bin/testPolytama bin/mainTxt bin/mainSDL
+ifeq ($(OS),Windows_NT)
+	INCLUDE_DIR_SDL = 	-Iextern/SDL2_mingw/SDL2-2.0.3/include \
+						-Iextern/SDL2_mingw/SDL2_ttf-2.0.12/x86_64-w64-mingw32/include/SDL2 \
+						-Iextern\SDL2_mingw\SDL2_image-2.0.0\x86_64-w64-mingw32\include\SDL2 \
+						-Iextern/SDL2_mingw/SDL2_mixer-2.0.1/x86_64-w64-mingw32/include/SDL2
 
-bin/mainSDL: obj/mainSDL.o obj/GameSDL.o $(OBJ) obj/TictactoeSDL.o
-	$(CC) -g obj/mainSDL.o obj/GameSDL.o $(OBJ) obj/TictactoeSDL.o -o bin/mainSDL $(SDL)
+	LIBS_SDL = -Lextern \
+			-Lextern/SDL2_mingw/SDL2-2.0.3/x86_64-w64-mingw32/lib \
+			-Lextern/SDL2_mingw/SDL2_ttf-2.0.12/x86_64-w64-mingw32/lib \
+			-Lextern/SDL2_mingw/SDL2_image-2.0.0/x86_64-w64-mingw32/lib \
+			-Lextern/SDL2_mingw/SDL2_mixer-2.0.1/x86_64-w64-mingw32/lib \
+			-lmingw32 -lSDL2main -lSDL2.dll -lSDL2_ttf.dll -lSDL2_image.dll -lSDL2_mixer.dll
 
-bin/mainTxt: obj/MainTxt.o obj/GameTxt.o $(OBJ) obj/TictactoeTxt.o
-	$(CC) -g obj/MainTxt.o obj/GameTxt.o $(OBJ) obj/TictactoeTxt.o -o bin/mainTxt -lncurses
+			
+	INCLUDE_DIR_NC = -Iextern/ncurses_mingw/include
+						
 
-bin/testPolytama: obj/testPolytama.o $(OBJ)
-	$(CC) -g obj/testPolytama.o $(OBJ) -o bin/testPolytama
+	LIBS_NC = -Lextern \
+			-Lextern/ncurses_mingw/lib \
+			-lmingw32 -lncursesw
+			
+else
+	INCLUDE_DIR_SDL = -I/usr/include/SDL2
+	LIBS_SDL = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
-obj/mainSDL.o: src/Sdl/mainSDL.cpp
-	$(CC) $(FlAGS) -c src/Sdl/mainSDL.cpp -o obj/mainSDL.o 
-
-obj/GameSDL.o: src/Sdl/GameSDL.cpp src/Sdl/GameSDL.h src/Core/Polytama.h src/Txt/TictactoeTxt.h src/Core/Mini_Game.h src/Core/Clothes.h src/Core/Consommable.h src/Core/InventoryClothes.h src/Core/InventoryConsommable.h
-	$(CC) $(FLAGS) -c src/Sdl/GameSDL.cpp -o obj/GameSDL.o
-
-obj/MainTxt.o: src/Txt/MainTxt.cpp
-	$(CC) $(FlAGS) -c src/Txt/MainTxt.cpp -o obj/MainTxt.o -lncurses
+	INCLUDE_DIR_NC = -I/usr/include/
+	LIBS_NC = -lncurses 
 	
-obj/GameTxt.o: src/Txt/GameTxt.cpp src/Txt/GameTxt.h src/Core/Polytama.h src/Txt/TictactoeTxt.h src/Core/Mini_Game.h src/Core/Clothes.h src/Core/Consommable.h src/Core/InventoryClothes.h src/Core/InventoryConsommable.h
-	$(CC) $(FLAGS) -c src/Txt/GameTxt.cpp -o obj/GameTxt.o -lncurses
+endif
+
+ifeq ($(OS),Windows_NT)
+	RES = obj/ressource.o
+else
+	RES =
+endif
+
+CC					= g++
+LD 					= g++
+LDFLAGS  			= 
+CPPFLAGS 			= -Wall -ggdb 
+OBJ_DIR 			= obj
+SRC_DIR 			= src
+BIN_DIR 			= bin
+INCLUDE_DIR			= -Isrc -Isrc/Core -Isrc/Sdl -Itxt
+
+default: make_dir $(BIN_DIR)/$(FINAL_TARGET_TXT) $(BIN_DIR)/$(FINAL_TARGET_SDL)
+
+make_dir:
+ifeq ($(OS),Windows_NT)
+	if not exist $(OBJ_DIR) mkdir $(OBJ_DIR) $(OBJ_DIR)\Txt $(OBJ_DIR)\Sdl $(OBJ_DIR)\Core
+else
+	test -d $(OBJ_DIR) || mkdir -p $(OBJ_DIR) $(OBJ_DIR)/Txt $(OBJ_DIR)/Sdl $(OBJ_DIR)/Core
+endif
+
+$(BIN_DIR)/$(FINAL_TARGET_TXT): $(SRCS_TXT:%.cpp=$(OBJ_DIR)/%.o)
+	$(LD) $+ -o $@ $(LDFLAGS) $(LIBS_NC)
+
+$(BIN_DIR)/$(FINAL_TARGET_SDL): $(SRCS_SDL:%.cpp=$(OBJ_DIR)/%.o) $(RES)
+	$(LD) $+ -o $@ $(LDFLAGS) $(LIBS_SDL)
 	
-obj/TictactoeTxt.o: src/Txt/TictactoeTxt.cpp src/Txt/TictactoeTxt.h src/Core/Tictactoe.h
-	$(CC) $(FLAGS) -c src/Txt/TictactoeTxt.cpp -o obj/TictactoeTxt.o -lncurses
 
-obj/TictactoeSDL.o: src/Sdl/TictactoeSDL.cpp src/Sdl/TictactoeSDL.h src/Core/Tictactoe.h
-	$(CC) $(FLAGS) -c src/Sdl/TictactoeSDL.cpp -o obj/TictactoeSDL.o $(SDL)
-
-obj/testPolytama.o: src/Core/testPolytama.cpp
-	$(CC) $(FLAGS) -c src/Core/testPolytama.cpp -o obj/testPolytama.o
-
-obj/Polytama.o:	src/Core/Polytama.cpp src/Core/Polytama.h src/Core/Clothes.h src/Core/Consommable.h src/Core/InventoryClothes.h src/Core/InventoryConsommable.h
-	$(CC) $(FLAGS) -c src/Core/Polytama.cpp -o obj/Polytama.o
-
-obj/Bar.o: src/Core/Bar.cpp src/Core/Bar.h
-	$(CC) $(FLAGS) -c src/Core/Bar.cpp -o obj/Bar.o
-	
-obj/InventoryClothes.o : src/Core/InventoryClothes.cpp src/Core/InventoryClothes.h src/Core/Item.h src/Core/Clothes.h 
-	$(CC) $(FLAGS) -c src/Core/InventoryClothes.cpp -o obj/InventoryClothes.o
-	
-obj/InventoryConsommable.o : src/Core/InventoryConsommable.cpp src/Core/InventoryConsommable.h  src/Core/Item.h src/Core/Consommable.h
-	$(CC) $(FLAGS) -c src/Core/InventoryConsommable.cpp -o obj/InventoryConsommable.o
-	
-obj/Clothes.o: src/Core/Clothes.cpp src/Core/Clothes.h 
-	$(CC) $(FLAGS) -c src/Core/Clothes.cpp -o obj/Clothes.o
-
-obj/Consommable.o: src/Core/Consommable.cpp src/Core/Consommable.h
-	$(CC) $(FLAGS) -c src/Core/Consommable.cpp -o obj/Consommable.o
-
-obj/Item.o: src/Core/Item.cpp src/Core/Item.h
-	$(CC) $(FLAGS) -c src/Core/Item.cpp -o obj/Item.o
-
-obj/MiniGame.o: src/Core/Mini_Game.cpp src/Core/Mini_Game.h
-	$(CC) $(FLAGS) -c src/Core/Mini_Game.cpp -o obj/MiniGame.o
-
-obj/Tictactoe.o: src/Core/Tictactoe.cpp src/Core/Tictactoe.h
-	$(CC) $(FLAGS) -c src/Core/Tictactoe.cpp -o obj/Tictactoe.o
-
-	
+obj/ressource.o: src/ressource.rc
+		windres -i src/ressource.rc -o obj/ressource.o	
+		
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp 
+	$(CC) -c $(CPPFLAGS) $(INCLUDE_DIR_SDL) $(INCLUDE_DIR_NC) $(INCLUDE_DIR) $< -o $@
 
 clean:
-	rm obj/*.o
-	rm bin/*
-				
-veryclean: clean
+ifeq ($(OS),Windows_NT)
+	del /f $(OBJ_DIR)\Txt\*.o $(OBJ_DIR)\Sdl\*.o $(OBJ_DIR)\Core\*.o $(BIN_DIR)\$(FINAL_TARGET_TXT).exe $(BIN_DIR)\$(FINAL_TARGET_SDL).exe
+else
+	rm -rf $(OBJ_DIR) $(BIN_DIR)/$(FINAL_TARGET_TXT) $(BIN_DIR)/$(FINAL_TARGET_SDL)
+endif
 

@@ -1,0 +1,6 @@
+#ifndef ressource_rc
+#define ressource_rc
+
+MAINICON ICON "../data/image/polytama.ico"
+
+#endif

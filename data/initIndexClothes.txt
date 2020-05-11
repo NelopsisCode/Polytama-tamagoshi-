@@ -1,5 +1,5 @@
 clothes
-7
+9
 100 sweat 0 1
 101 sombrero 0 0
 102 casquette 0 0
@@ -7,4 +7,6 @@ clothes
 104 lunette 0 2
 105 monocle 0 2
 106 T-shirt-Polytech 1 1
+107 Costard 0 1
+108 Masque-Chirurgicale 0 2
 id nameItem numberItem(=1) slotClothes(HEAD=0, CHEST=1, ACCESSORY=2)

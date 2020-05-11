@@ -2,12 +2,12 @@
 
 void playSDL(Game_TicTacToe & tictactoe, SDL_Window *&window, SDL_Renderer *&renderer)
 {
-    cout << "fouut" << endl;
     printSDLBoardTictactoe(tictactoe, window, renderer);
     SDL_Delay(1500);
 
     int tour;
     bool fin;
+    bool rules = false;
     tour = 0;
     fin = false;
 
@@ -31,8 +31,23 @@ void playSDL(Game_TicTacToe & tictactoe, SDL_Window *&window, SDL_Renderer *&ren
                     switch (event.type)
                     {
                     case SDL_MOUSEBUTTONDOWN:
-
-                        if (event.button.x > 230 and event.button.x < 390 and event.button.y > 30 and event.button.y < 190)
+                        if (event.button.x > 50 and event.button.x < 150 and event.button.y > 50 and event.button.y < 150)
+                        {
+                            if(!rules)
+                            {
+                            CreateImage("data/image/minigame/TictactoeRules.png",window,renderer,-80, -50,true);
+                            SDL_RenderPresent(renderer);
+                            rules = true;
+                            }
+                            else
+                            {
+                                printSDLBoardTictactoe(tictactoe,window,renderer);
+                                rules = false;
+                            }
+                            
+                        }
+                        
+                        else if (event.button.x > 230 and event.button.x < 390 and event.button.y > 30 and event.button.y < 190)
                         {
                             x = 1;
                             y = 1;
@@ -129,18 +144,16 @@ void playSDL(Game_TicTacToe & tictactoe, SDL_Window *&window, SDL_Renderer *&ren
     if (tictactoe.win(HUMAN))
     {
         tictactoe.setTropheeTictactoe(true);
-        SDL_Color green {0,255,0};
-        CreateText("Vous avez gagné!", window,renderer,green,"font.ttf",70,0,0,true);
+        CreateImage("data/image/minigame/Winscreen.png",window,renderer,0,0,true);
     }
     else if (tictactoe.win(AI))
     {
-        SDL_Color red {255,0,0};
-        CreateText("Roboto a gagné...", window,renderer,red,"font.ttf",70,0,0,true);
+        CreateImage("data/image/minigame/Losescreen.png",window,renderer,0,0,true);
     }
     else if (tictactoe.tie())
     {   
         SDL_Color blue {0,0,255};
-        CreateText("Egalité...", window,renderer,blue,"font.ttf",100,0,0,true);
+        CreateText("Egalité...", window,renderer,blue,"data/font/font.ttf",100,0,0,true);
     }
     SDL_RenderPresent(renderer);
     SDL_Delay(1500);
@@ -152,7 +165,7 @@ bool stupidAI()
     int min = 1;
     int max = 100;
     int plage = max - min + 1;
-    srand((unsigned int)time(NULL));
+    //srand((unsigned int)time(NULL));
     random = (rand() % plage) + min;
     if (random < 52)
     {
@@ -164,10 +177,11 @@ bool stupidAI()
     }
 }
 
-void printSDLBoardTictactoe(Game_TicTacToe tictactoe, SDL_Window *&window, SDL_Renderer *&renderer)
+void printSDLBoardTictactoe(const Game_TicTacToe & tictactoe, SDL_Window *&window, SDL_Renderer *&renderer)
 {
-    CreateImage("data/image/inventoryconsommable.png", window, renderer, 0, 0, true);
-    int posx, posy;
+    CreateImage("data/image/minigame/BackgroundTictactoe.png", window, renderer, 0, 0, true);
+    CreateImage("data/image/minigame/Help.png", window, renderer, 50, 50, false);
+    unsigned int posx, posy;
     for (unsigned int i = 0; i < 3; i++)
     {
         for (unsigned int j = 0; j < 3; j++)
@@ -203,14 +217,13 @@ void printSDLBoardTictactoe(Game_TicTacToe tictactoe, SDL_Window *&window, SDL_R
 
             if (tictactoe.boardTictactoe[i][j] == 'X')
             {
-                CreateImage("data/image/items/1.png", window, renderer, posx, posy, false);
+                CreateImage("data/image/minigame/TictactoePlayer.png", window, renderer, posx, posy, false);
             }
             else if (tictactoe.boardTictactoe[i][j] == 'O')
             {
-                CreateImage("data/image/items/106.png", window, renderer, posx, posy, false);
+                CreateImage("data/image/minigame/TictactoeAI.png", window, renderer, posx, posy, false);
             }
         }
     }
-    cout << endl;
     SDL_RenderPresent(renderer);
 }

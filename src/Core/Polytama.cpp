@@ -116,24 +116,51 @@ void Polytama::setName(const string &name)
 
 void Polytama::setHunger(const unsigned int &val)
 {
-	tamaHunger.setValue(val);
+	if(val>=0 and val<=100)
+	{
+		tamaHunger.setValue(val);
+	}
+	else
+	{
+		tamaHunger.setValue(0);
+	}	
+	
 }
 
 void Polytama::setJoy(const unsigned int &val)
 {
-	tamaJoy.setValue(val);
+	if(val>=0 and val<=100)
+	{
+		tamaJoy.setValue(val);
+	}
+	else
+	{
+		tamaJoy.setValue(0);
+	}	
 }
-
 void Polytama::setHygiene(const unsigned int &val)
 {
-	tamaHygiene.setValue(val);
+	if(val>=0 and val<=100)
+	{
+		tamaHygiene.setValue(val);
+	}
+	else
+	{
+		tamaHygiene.setValue(0);
+	}		
 }
 
 void Polytama::setThirst(const unsigned int &val)
 {
-	tamaThirst.setValue(val);
+	if(val>=0 and val<=100)
+	{
+		tamaThirst.setValue(val);
+	}
+	else
+	{
+		tamaThirst.setValue(0);
+	}		
 }
-
 void Polytama::consume(const Consommable &c)
 {
 
@@ -331,6 +358,44 @@ void Polytama::pastTime(const long int &initTime)
 	tamaJoy -= drop;
 
 	tamaThirst -= drop;
+
+	if (tamaThirst.getValue() == 0 || tamaHygiene.getValue() == 0 || tamaHunger.getValue() == 0 || tamaThirst.getValue() == 0)
+	{
+		tamaHealth -= drop/2;
+	}
+}
+
+
+bool Polytama::dead()const
+{
+	return tamaHealth.getValue() <= 0;
+}
+
+void Polytama::revive()
+{
+	for(unsigned int i = 0 ; i < 3 ;i++)
+	{
+		if(tamaClothes[i] != nullptr)
+		{
+			removeClothes((IdBody)i);
+		}
+	}
+	InventoryConsommable conso;
+	conso.loadIndexConsommable("data/initIndexConsommable.txt");
+	conso.saveIndexConsommable("data/indexConsommable.txt");
+	InventoryClothes clo;
+	clo.loadIndexClothes("data/initIndexClothes.txt");
+	clo.saveIndexClothes("data/indexClothes.txt");
+	tamaHealth.setValue(100);
+	tamaHunger.setValue(1);
+	tamaHygiene.setValue(1);
+	tamaJoy.setValue(1);
+	tamaThirst.setValue(1);
+}
+
+void Polytama::electrocute()
+{
+	tamaHealth.setValue(0);
 }
 
 void Polytama::polytamaTestRegression()
@@ -463,123 +528,3 @@ void Polytama::polytamaTestRegression()
 	cout << "test de Regression OK" << endl;
 }
 
-void Polytama::polytamaTest()
-{
-	long int initTime;
-	loadSave("save.txt", initTime);
-	pastTime(initTime);
-
-	InventoryConsommable manger;
-	manger.loadIndexConsommable("data/indexConsommable.txt");
-	InventoryClothes sweatshirt;
-	sweatshirt.loadIndexClothes("data/indexClothes.txt");
-	printPolytama();
-
-	cout << "Vous pouvez :" << endl;
-	cout << "1 : Faire dabber " << tamaName << endl;
-	cout << "2 : Lui donner un bain " << endl;
-	cout << "3 : Jouer avec lui " << endl;
-	cout << "4 : lui donner a? manger" << endl;
-	cout << "5 : L'habiller autrement" << endl;
-	cout << "6 : afficher l'inventaire" << endl;
-	unsigned int i = 0;
-	cin >> i;
-	switch (i)
-	{
-	case 1:
-	{
-		dab();
-		printPolytama();
-	}
-	break;
-	case 2:
-	{
-		takeABath();
-		printPolytama();
-	}
-	break;
-	case 3:
-	{
-		Mini_Game game;
-		game.selectAndPlayMiniGame();
-		if (game.getTrophee() == true)
-		{
-			if (game.getReward() < 100)
-			{
-				manger.addInInventoryConsommable(manger.searchIdInInventoryConsommable(game.getReward()));
-			}
-			else
-			{
-				sweatshirt.addInInventoryClothes(sweatshirt.searchIdInInventoryClothes(game.getReward()));
-			}
-		}
-	}
-	break;
-	case 4:
-	{
-		Consommable conso;
-		manger.printInventoryConsommable();
-		cout << "Que voulez vous donner a " << tamaName << " ?" << endl;
-		string mot;
-		cin >> mot;
-		conso = manger.searchInInventoryConsommable(mot);
-		while (conso.getNumberItem() == 0)
-		{
-			manger.printInventoryConsommable();
-			cout << "Veuillez choisir une denr? pr?ente dans votre inventaire" << endl;
-			cin >> mot;
-			conso = manger.searchInInventoryConsommable(mot);
-		}
-		manger.deleteFromInventoryConsommable(conso.getIdItem());
-		consume(conso);
-		cout << endl;
-		printPolytama();
-		cout << endl;
-		manger.printInventoryConsommable();
-		manger.saveIndexConsommable("data/indexConsommable.txt");
-	}
-	break;
-	case 5:
-	{
-		sweatshirt.printInventoryClothes();
-		cout << "Avec quoi voulez vous habiller " << tamaName << " ?" << endl;
-		string mot;
-		cin >> mot;
-		Clothes clot1;
-		clot1 = sweatshirt.searchInInventoryClothes(mot);
-		while (clot1.getNumberItem() == 0)
-		{
-			sweatshirt.printInventoryClothes();
-			cout << "Veuillez choisir un objet pr?ent dans votre inventaire " << endl;
-			cin >> mot;
-			clot1 = sweatshirt.searchInInventoryClothes(mot);
-		}
-		if (tamaClothes[clot1.getSlotClothes()] != nullptr) //Probleme (il rentre dans la boucle ?chaque fois meme si tamaclothes[]==nullptr
-		{
-			Clothes clot3 = *tamaClothes[clot1.getSlotClothes()]; //probleme (fabrique un item bidon
-			sweatshirt.addInInventoryClothes(clot3);
-		}
-		wearClothes(clot1);
-		sweatshirt.deleteFromInventoryClothes(clot1.getIdItem());
-
-		sweatshirt.printInventoryClothes();
-		sweatshirt.saveIndexClothes("data/indexClothes.txt");
-	}
-	break;
-	case 6:
-	{
-		manger.printInventoryConsommable();
-		manger.saveIndexConsommable("data/indexConsommable.txt");
-		sweatshirt.printInventoryClothes();
-		sweatshirt.saveIndexClothes("data/indexClothes.txt");
-	}
-	break;
-	default:
-	{
-		cout << "Veuillez choisir une proposition ci-dessus" << endl;
-	}
-	break;
-	}
-
-	save("save.txt");
-}

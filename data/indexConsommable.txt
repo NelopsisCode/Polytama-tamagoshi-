@@ -1,6 +1,6 @@
 consommable
-10
-1 tacos 0 30 0 -20 35
+9
+1 tacos 2 30 0 -20 35
 2 cola 0 0 25 -10 20
 3 spagetti 0 25 0 -15 15
 4 salade-verte 0 10 0 0 -30
@@ -8,6 +8,6 @@ consommable
 6 coockie 0 5 -5 20 7
 7 sushi 0 10 0 0 0
 8 chips 0 5 0 -10 10
-9 pomme 1 10 5 0 3
-0 null 0 0 0 0 0
-ation hygiene happiness
+9 pomme 0 10 5 0 3
+
+tem food hydration hygiene happiness

@@ -12,10 +12,11 @@ int main(void) {
 	initscr();
     attroff(A_UNDERLINE | A_BOLD);
     printw("\n\n");
-    bool out = false;
     char choice =' ';
     long int initTime;
-    printw("Voulez-vous :\n");
+    printw("Bienvenue dans la version demo de Polytama\n");
+    printw("Dans cette version les données ne sont pas sauvegardées.\n");
+    printw("Pour jouer au vrai jeu lancez la version SDL !\n");
 	printw("1 : Commencer une nouvelle partie ?\n");
     printw("2 : Charger l'ancienne partie ?\n");
 	printw("3 : Quitter ?\n");
